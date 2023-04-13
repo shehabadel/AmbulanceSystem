@@ -63,6 +63,10 @@ public class UserModel implements Parcelable {
         }
     };
 
+    public UserModel() {
+
+    }
+
     public String getUserID() {
         return userID;
     }
