@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">AmbulanceSystem</string>
+    <string name="app_name">AmbuCare</string>
+    <string name="moto">With just a few clicks an ambulance will reach you right away</string>
+    <string name="getStarted">Get Started</string>
+    <string name="findYour">Find your</string>
+    <string name="ambulance">Ambulance</string>
+    <string name="signIn">Sign In</string>
+    <string name="phoneHint">Phone Number</string>
+    <string name="noAccount">Don\'t have an account?</string>
+    <string name="signUp">Sign Up</string>
+    <string name="proceed">Proceed</string>
+    <string name="firstNameHint">First name</string>
+    <string name="lastNameHint">Last name</string>
+    <string name="emailHint">Email</string>
+    <string name="passwordHint">Password</string>
+    <string name="confirmPasswordHint">Confirm password</string>
 </resources>

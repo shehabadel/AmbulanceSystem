@@ -3,24 +3,26 @@ package com.example.ambulancesystem;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
-    private TextView getStartedButton;
+    ImageView backButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_up);
 
-        getStartedButton = (TextView) findViewById(R.id.getStartedButton);
+        backButton = (ImageView) findViewById(R.id.backButton);
 
-        getStartedButton.setOnClickListener(new View.OnClickListener() {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, SignInActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
                 startActivity(intent);
             }
         });
