@@ -7,7 +7,7 @@ public class RequestModel implements Parcelable {
 Status requestStatus;
 DriverModel requestDriver;
 UserModel requestUser; //Optional
-
+    public RequestModel(){}
     public RequestModel(Status requestStatus, DriverModel requestDriver, UserModel requestUser) {
         this.requestStatus = requestStatus;
         this.requestDriver = requestDriver;
