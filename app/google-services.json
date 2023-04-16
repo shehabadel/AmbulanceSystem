@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "138214893626",
-    "project_id": "ambulancesystem-77d10",
-    "storage_bucket": "ambulancesystem-77d10.appspot.com"
+    "project_number": "671230394360",
+    "project_id": "ambucare-5d143",
+    "storage_bucket": "ambucare-5d143.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:138214893626:android:2f992ffc2ba5e076b6ad03",
+        "mobilesdk_app_id": "1:671230394360:android:db2f2d1f02b1de3adf200d",
         "android_client_info": {
           "package_name": "com.example.ambulancesystem"
         }
       },
       "oauth_client": [
         {
-          "client_id": "138214893626-52k05bk2mf5ebf1tajqbo8mdeeok5dup.apps.googleusercontent.com",
+          "client_id": "671230394360-seisec2q9qqj0ulejsi5so0aa2vsgna5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ambulancesystem",
+            "certificate_hash": "f5cc48e2284f00481a40f42b2e1ffa083e1f5a95"
+          }
+        },
+        {
+          "client_id": "671230394360-rph7929sfv4ltmaugr5qtc5ucmjor9fh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBCDNziHQHIYB7JJtAluQUH59oITzrrggA"
+          "current_key": "AIzaSyAlJirBqgkitN-CbKr6Q44MRjPqMFtE6q4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "138214893626-52k05bk2mf5ebf1tajqbo8mdeeok5dup.apps.googleusercontent.com",
+              "client_id": "671230394360-rph7929sfv4ltmaugr5qtc5ucmjor9fh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
