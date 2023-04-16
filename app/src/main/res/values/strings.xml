@@ -14,4 +14,8 @@
     <string name="emailHint">Email</string>
     <string name="passwordHint">Password</string>
     <string name="confirmPasswordHint">Confirm password</string>
+    <string name="medicalRecord">Medical record</string>
+    <string name="dateOfBirthHint">Date of birth</string>
+    <string name="medicalCondition">Please specify any medical conditions</string>
+    <string name="nationalID">National ID</string>
 </resources>
