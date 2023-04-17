@@ -4,15 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -69,13 +65,13 @@ public class MedicalRecordActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopup();
+                showCongratsPopup();
             }
         });
 
     }
 
-    private void showPopup() {
+    private void showCongratsPopup() {
         View popupView = getLayoutInflater().inflate(R.layout.congrats_popup, null);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -99,9 +95,45 @@ public class MedicalRecordActivity extends AppCompatActivity {
 
         popupWindow.setAnimationStyle(android.R.style.Animation_Translucent);
 
-        TextView popupButton = popupView.findViewById(R.id.startButton);
+        TextView startButton = popupView.findViewById(R.id.startButton);
 
-        popupButton.setOnClickListener(new View.OnClickListener() {
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                showAddressPopup();
+            }
+        });
+
+        popupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
+    }
+    private void showAddressPopup() {
+        View popupView = getLayoutInflater().inflate(R.layout.saved_address_popup, null);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
+                WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        WindowManager.LayoutParams params = getWindow().getAttributes();
+        params.alpha = 0.5f; // set the transparency here
+        params.dimAmount = 0.5f;
+        getWindow().setAttributes(params);
+
+
+        int width = 1000;
+        int height = 1200;
+        boolean focusable = false;
+
+        PopupWindow popupWindow = new PopupWindow(
+                popupView, width, height, focusable);
+
+        popupWindow.setElevation(10);
+
+        popupWindow.setAnimationStyle(android.R.style.Animation_Translucent);
+
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView confirmAddressButton = popupView.findViewById(R.id.confirmAddress);
+
+        confirmAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MedicalRecordActivity.this, SignUpActivity.class);
