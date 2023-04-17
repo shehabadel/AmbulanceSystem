@@ -27,4 +27,6 @@
     <string name="floor">Floor</string>
     <string name="apartment">Apartment</string>
     <string name="confirmSavedAddress">Confirm saved address</string>
+    <string name="saveProfile">Save</string>
+    <string name="profile">Profile</string>
 </resources>
