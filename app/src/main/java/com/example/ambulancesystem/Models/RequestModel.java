@@ -4,10 +4,29 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class RequestModel implements Parcelable {
-Status requestStatus;
-DriverModel requestDriver;
-UserModel requestUser; //Optional
-    public RequestModel(){}
+    String id;
+    Status requestStatus;
+    DriverModel requestDriver;
+    UserModel requestUser; //Optional
+
+    public RequestModel() {
+    }
+
+    public RequestModel(String id, Status requestStatus, DriverModel requestDriver, UserModel requestUser) {
+        this.id = id;
+        this.requestStatus = requestStatus;
+        this.requestDriver = requestDriver;
+        this.requestUser = requestUser;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public RequestModel(Status requestStatus, DriverModel requestDriver, UserModel requestUser) {
         this.requestStatus = requestStatus;
         this.requestDriver = requestDriver;

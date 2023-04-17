@@ -1,12 +1,18 @@
 package com.example.ambulancesystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.ambulancesystem.Models.RequestModel;
+import com.example.ambulancesystem.ViewModels.RequestViewModel;
 
 public class SignInActivity extends AppCompatActivity {
 
