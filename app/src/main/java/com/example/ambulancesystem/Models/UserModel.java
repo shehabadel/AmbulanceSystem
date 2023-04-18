@@ -14,8 +14,24 @@ public class UserModel implements Parcelable {
     String phoneNumber;
     String gender;
     String nationalID;
-    Address pickupAddress;
-    Location currentLocation;
+    Address pickupAddress = new Address();
+    Location currentLocation = new Location();
+
+    @Override
+    public String toString() {
+            return "UserModel{" +
+                    "userID='" + userID + '\'' +
+                    ", firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", medicalCondition='" + medicalCondition + '\'' +
+                    ", dateOfBirth='" + dateOfBirth + '\'' +
+                    ", phoneNumber='" + phoneNumber + '\'' +
+                    ", gender='" + gender + '\'' +
+                    ", nationalID='" + nationalID + '\'' +
+                    ", pickupAddress=" + pickupAddress.toString() +
+                    ", currentLocation=" + currentLocation.toString() +
+                    '}';
+    }
 
     public UserModel(String userID,
                      String firstName,
@@ -64,7 +80,6 @@ public class UserModel implements Parcelable {
     };
 
     public UserModel() {
-
     }
 
     public String getUserID() {
