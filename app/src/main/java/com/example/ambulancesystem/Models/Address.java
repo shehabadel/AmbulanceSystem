@@ -10,14 +10,29 @@ public class Address implements Parcelable {
     String streetName;
     int buildNumber;
     int floorNumber;
-    int appNumber;
+    int aptNumber;
+
+    public Address() {
+
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "city='" + city + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", buildNumber=" + buildNumber +
+                ", floorNumber=" + floorNumber +
+                ", aptNumber=" + aptNumber +
+                '}';
+    }
 
     protected Address(Parcel in) {
         city = in.readString();
         streetName = in.readString();
         buildNumber = in.readInt();
         floorNumber = in.readInt();
-        appNumber = in.readInt();
+        aptNumber = in.readInt();
     }
 
     public static final Creator<Address> CREATOR = new Creator<Address>() {
@@ -64,21 +79,21 @@ public class Address implements Parcelable {
         this.floorNumber = floorNumber;
     }
 
-    public int getAppNumber() {
-        return appNumber;
+    public int getAptNumber() {
+        return aptNumber;
     }
 
-    public void setAppNumber(int appNumber) {
-        this.appNumber = appNumber;
+    public void setAptNumber(int aptNumber) {
+        this.aptNumber = aptNumber;
     }
 
 
-    public Address(String city, String streetName, int buildNumber, int floorNumber, int appNumber) {
+    public Address(String city, String streetName, int buildNumber, int floorNumber, int aptNumber) {
         this.city = city;
         this.streetName = streetName;
         this.buildNumber = buildNumber;
         this.floorNumber = floorNumber;
-        this.appNumber = appNumber;
+        this.aptNumber = aptNumber;
     }
 
     @Override
@@ -92,6 +107,6 @@ public class Address implements Parcelable {
         dest.writeString(streetName);
         dest.writeInt(buildNumber);
         dest.writeInt(floorNumber);
-        dest.writeInt(appNumber);
+        dest.writeInt(aptNumber);
     }
 }

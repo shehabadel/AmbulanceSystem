@@ -9,6 +9,17 @@ public class Location implements Parcelable {
     private double latitude;
     private double longitude;
 
+    @Override
+    public String toString() {
+        return "Location{" +
+                "latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
+
+    public Location() {
+    }
+
     public Location(double latitude, double longitude, String address, float accuracy, float speed, float bearing) {
         this.latitude = latitude;
         this.longitude = longitude;

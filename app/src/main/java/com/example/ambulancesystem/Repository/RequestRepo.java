@@ -39,7 +39,6 @@ public class RequestRepo {
 
     private void loadRequest() {
         try {
-            Log.d("Hello", "World");
             // String currentUser = auth.getCurrentUser().getUid();
             String currentUser = "A";
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();

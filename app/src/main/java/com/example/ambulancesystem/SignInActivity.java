@@ -13,14 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ambulancesystem.Models.RequestModel;
+import com.example.ambulancesystem.Models.UserModel;
 import com.example.ambulancesystem.ViewModels.RequestViewModel;
+import com.example.ambulancesystem.ViewModels.UserViewModel;
 
 public class SignInActivity extends AppCompatActivity {
 
     ImageView backButton;
     TextView signUpButton;
     TextView signInButton;
-
+    UserViewModel userViewModel;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,15 @@ public class SignInActivity extends AppCompatActivity {
         backButton = (ImageView) findViewById(R.id.backButton);
         signUpButton = (TextView) findViewById(R.id.signUpButton);
         signInButton = (TextView) findViewById(R.id.signInButton);
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.init();
+        userViewModel.getUser().observe(this, new Observer<UserModel>() {
+            @Override
+            public void onChanged(UserModel userModel) {
+                Log.d("UserModel",userModel.toString());
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
