@@ -19,63 +19,88 @@ import com.google.firebase.database.ValueEventListener;
  * UserRepo needed to save user's profile data,
  * fetch user's profile data, fetch current location
  * update current location.
- * */
+ */
 public class UserRepo {
     static UserRepo instance;
     private MutableLiveData<UserModel> user;
     UserModel userModel = new UserModel();
     //private FirebaseAuth auth = FirebaseAuth.getInstance();
 
-    public static UserRepo getInstance(){
-        if(instance==null){
-            instance=new UserRepo();
+    public static UserRepo getInstance() {
+        if (instance == null) {
+            instance = new UserRepo();
         }
         return instance;
     }
-    public MutableLiveData<UserModel> getUser(){
+
+    public MutableLiveData<UserModel> getUser() {
         user = new MutableLiveData<>();
-        userModel=new UserModel();
+        userModel = new UserModel();
         loadUser();
         user.setValue(userModel);
         return user;
     }
+
+    public boolean updatePickupAddress(Address address) {
+        return updateAddress(address);
+    }
+
     /**
      * Fetch user's data from users node
      * based on current user uuid
-     * */
+     */
     private void loadUser() {
         try {
 //          String currentUser = auth.getCurrentUser().getUid();
             String currentUser = "A";
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             Query userQuery = db.child("users").child(currentUser).child("profile");
-            Log.d("user",userQuery.toString());
+            Log.d("user", userQuery.toString());
 
             userQuery.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
-                        Log.d("snapshot",snapshot.getValue().toString());
+                    if (snapshot.exists()) {
+                        Log.d("snapshot", snapshot.getValue().toString());
                         userModel = snapshot.getValue(UserModel.class);
-                        Log.d("userSnapshot",userModel.toString());
+                        Log.d("userSnapshot", userModel.toString());
                         Address userAddress = snapshot.child("pickupAddress").getValue(Address.class);
-                        Log.d("userAddress",userAddress.toString());
+                        Log.d("userAddress", userAddress.toString());
                         userModel.setPickupAddress(userAddress);
                         userModel.setUserID(currentUser);
                         user.setValue(userModel);
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
                 }
             });
-        }catch(Exception e){
-            Log.e("loadUser",e.getMessage());
+        } catch (Exception e) {
+            Log.e("loadUser", e.getMessage());
         }
     }
 
-    private void updateProfile(){}
+    private void updateProfile() {
+    }
 
-    private void updateLocation(){};
+    /**
+     * Update user's pickup address
+     * from users node based on current uuid
+     */
+    private boolean updateAddress(Address address) {
+//        String currentUser = auth.getCurrentUser().getUid();
+        String currentUser = "A";
+        boolean updatedAddress = false;
+        try {
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference userPickupAddressRef = db.child("users").child(currentUser).child("profile").child("pickupAddress");
+            userPickupAddressRef.setValue(address);
+            updatedAddress = true;
+        } catch (Exception e) {
+            Log.e("updateAddr", e.getMessage());
+        }
+        return updatedAddress;
+    }
 }

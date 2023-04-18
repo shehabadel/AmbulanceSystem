@@ -16,10 +16,14 @@ public class UserViewModel extends ViewModel {
         }
         user = UserRepo.getInstance().getUser();
     }
+    /**
+     * Fetch user's profile data including
+     * saved pickupAddress and current location
+     * */
     public LiveData<UserModel> getUser(){
         return user;
     }
-    public void updateUserAddress(Address address){
-        //Call user's repo to update user's address
+    public boolean updateUserAddress(Address address){
+        return UserRepo.getInstance().updatePickupAddress(address);
     }
 }
