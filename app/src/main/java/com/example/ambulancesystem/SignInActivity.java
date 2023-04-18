@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ambulancesystem.Models.Address;
 import com.example.ambulancesystem.Models.RequestModel;
 import com.example.ambulancesystem.Models.UserModel;
 import com.example.ambulancesystem.ViewModels.RequestViewModel;
@@ -61,6 +62,7 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //userViewModel.updateUserAddress(new Address("alo","alo street",12,32,1));
                 Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
