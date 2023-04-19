@@ -19,21 +19,42 @@ public class UserModel implements Parcelable {
 
     @Override
     public String toString() {
-            return "UserModel{" +
-                    "userID='" + userID + '\'' +
-                    ", firstName='" + firstName + '\'' +
-                    ", lastName='" + lastName + '\'' +
-                    ", medicalCondition='" + medicalCondition + '\'' +
-                    ", dateOfBirth='" + dateOfBirth + '\'' +
-                    ", phoneNumber='" + phoneNumber + '\'' +
-                    ", gender='" + gender + '\'' +
-                    ", nationalID='" + nationalID + '\'' +
-                    ", pickupAddress=" + pickupAddress.toString() +
-                    ", currentLocation=" + currentLocation.toString() +
-                    '}';
+        return "UserModel{" +
+                "userID='" + userID + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", medicalCondition='" + medicalCondition + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", gender='" + gender + '\'' +
+                ", nationalID='" + nationalID + '\'' +
+                ", pickupAddress=" + pickupAddress.toString() +
+                ", currentLocation=" + currentLocation.toString() +
+                '}';
     }
 
-    public UserModel(String userID,
+    public UserModel(String firstName, String lastName, String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID, Address pickupAddress) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.medicalCondition = medicalCondition;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.nationalID = nationalID;
+        this.pickupAddress = pickupAddress;
+    }
+
+    public UserModel(String firstName, String lastName, String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.medicalCondition = medicalCondition;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.nationalID = nationalID;
+    }
+
+    public UserModel(
                      String firstName,
                      String lastName,
                      String medicalCondition,
@@ -43,7 +64,6 @@ public class UserModel implements Parcelable {
                      String nationalID,
                      Address pickupAddress,
                      Location currentLocation) {
-        this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.medicalCondition = medicalCondition;

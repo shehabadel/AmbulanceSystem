@@ -24,6 +24,7 @@ public class SignInActivity extends AppCompatActivity {
     TextView signUpButton;
     TextView signInButton;
     UserViewModel userViewModel;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class SignInActivity extends AppCompatActivity {
         userViewModel.getUser().observe(this, new Observer<UserModel>() {
             @Override
             public void onChanged(UserModel userModel) {
-                Log.d("UserModel",userModel.toString());
+                Log.d("UserModel", userModel.toString());
             }
         });
 
@@ -63,6 +64,10 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //userViewModel.updateUserAddress(new Address("alo","alo street",12,32,1));
+                userViewModel.updateProfile(
+                        new UserModel("Omar", "ssss", "a7a", "1999-23-1", "01000128323", "Male", "273661618121",
+                        new Address("cairo", "street1", 17, 19, 22))
+                );
                 Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }

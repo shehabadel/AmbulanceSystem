@@ -45,6 +45,11 @@ public class UserRepo {
         return updateAddress(address);
     }
 
+    public void updateProfile(UserModel userDetails) {
+        updateProfileAUX(userDetails);
+        loadUser();
+    }
+
     /**
      * Fetch user's data from users node
      * based on current user uuid
@@ -82,7 +87,29 @@ public class UserRepo {
         }
     }
 
-    private void updateProfile() {
+    /**
+     * Update user's profile
+     */
+    private void updateProfileAUX(UserModel userDetails) {
+//        String currentUser= auth.getCurrentUser().getUid();
+        String currentUser = "A";
+        try {
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference userProfile = db.child("users").child(currentUser).child("profile");
+            userProfile.setValue(userProfile);
+            DatabaseReference userAddress = userProfile.child("pickupAddress");
+            DatabaseReference userLocation = userProfile.child("currentLocation");
+
+            if(userDetails.getPickupAddress()!=null){
+                userAddress.setValue(userDetails.getPickupAddress());
+            }
+            if(userDetails.getCurrentLocation()!=null){
+                userLocation.setValue(userDetails.getCurrentLocation());
+            }
+        } catch (Exception e) {
+            Log.e("updateProfile", e.getMessage());
+            Log.e("updateprofstack",e.getStackTrace().toString());
+        }
     }
 
     /**
