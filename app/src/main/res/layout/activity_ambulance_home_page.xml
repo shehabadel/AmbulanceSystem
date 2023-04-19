@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <RelativeLayout
         android:id="@+id/middle_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
     <LinearLayout
         android:id="@+id/bar"
@@ -20,46 +22,28 @@
         android:layout_marginTop="255dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="271dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                >
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
                     android:background="@color/white"
 
-                    android:src="@drawable/for_me"></ImageView>
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button"
-                    android:text="For Me"
-
+                    android:src="@drawable/for_me"
                     >
-
-                </Button>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@color/white"
-                    android:src="@drawable/for_someone_else">
 
                 </ImageView>
 
@@ -67,24 +51,58 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button"
-                    android:text="For Someone else"></Button>
+                    android:text="For Me"
+                    >
+                </Button>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@color/white"
+                    android:src="@drawable/for_someone_else"
+                    >
+
+                </ImageView>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:text="For Someone else"
+                    >
+
+                </Button>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Emergency mode"
-                        android:textColor="@color/black"></TextView>
+                        android:textColor="@color/black"
+                        >
+
+                    </TextView>
 
                     <Switch
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:minWidth="48dp"
-                        android:minHeight="48dp"></Switch>
+                        android:minHeight="48dp"
+                        >
+
+                    </Switch>
 
                 </LinearLayout>
 
@@ -93,7 +111,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
 
 </RelativeLayout>
 
