@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ambulancesystem.Models.Address;
+import com.example.ambulancesystem.Models.Location;
 import com.example.ambulancesystem.Models.RequestModel;
 import com.example.ambulancesystem.Models.UserModel;
 import com.google.firebase.database.DataSnapshot;
@@ -96,19 +97,20 @@ public class UserRepo {
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             DatabaseReference userProfile = db.child("users").child(currentUser).child("profile");
-            userProfile.setValue(userProfile);
+            userProfile.setValue(userDetails);
             DatabaseReference userAddress = userProfile.child("pickupAddress");
             DatabaseReference userLocation = userProfile.child("currentLocation");
 
-            if(userDetails.getPickupAddress()!=null){
+            if (userDetails.getPickupAddress() != null) {
                 userAddress.setValue(userDetails.getPickupAddress());
             }
-            if(userDetails.getCurrentLocation()!=null){
+            if (userDetails.getCurrentLocation() != null) {
                 userLocation.setValue(userDetails.getCurrentLocation());
             }
         } catch (Exception e) {
             Log.e("updateProfile", e.getMessage());
-            Log.e("updateprofstack",e.getStackTrace().toString());
+            Log.e("updateprofstack", e.getStackTrace().toString());
+            e.printStackTrace();
         }
     }
 
@@ -129,5 +131,24 @@ public class UserRepo {
             Log.e("updateAddr", e.getMessage());
         }
         return updatedAddress;
+    }
+
+    /**
+     * Update's users current Location
+     * from the
+     * */
+    private boolean updateUserLocation(Location location){
+        //        String currentUser = auth.getCurrentUser().getUid();
+        String currentUser = "A";
+        boolean userLocation = false;
+        try {
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference userPickupLocationRef = db.child("users").child(currentUser).child("profile").child("currentLocation");
+            userPickupLocationRef.setValue(location);
+            userLocation = true;
+        } catch (Exception e) {
+            Log.e("updateLocation", e.getMessage());
+        }
+        return userLocation;
     }
 }
