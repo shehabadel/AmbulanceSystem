@@ -12,6 +12,9 @@ public class DriverModel implements Parcelable {
     String driverEstimatedTime;
     Location driverLocation;
 
+    public DriverModel() {
+    }
+
     public DriverModel(String driverName, String driverCarNumber, String driverPhoneNumber, String driverEstimatedTime, Location driverLocation) {
         this.driverName = driverName;
         this.driverCarNumber = driverCarNumber;
