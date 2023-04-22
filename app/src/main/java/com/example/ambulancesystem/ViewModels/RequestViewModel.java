@@ -17,10 +17,16 @@ public class RequestViewModel extends ViewModel {
         request = RequestRepo.getInstance().getRequest();
     }
 
+    /**
+     * Get current request
+     */
     public LiveData<RequestModel> getRequest() {
         return request;
     }
 
+    /**
+     * Create a request
+     */
     public void createRequest(RequestModel requestModel) {
         //RequestRepo.getInstance().createRequest(request);
     }
