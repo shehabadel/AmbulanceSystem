@@ -70,8 +70,8 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                requestViewModel.createRequest(new RequestModel(Status.REQUESTED, new DriverModel("ahmed", "18281",
-//                        "01011575136", "90ETA", new Location(90, 100))));
+                requestViewModel.createRequest(new RequestModel(Status.REQUESTED, new DriverModel("asdasda", "12133218281",
+                        "12312321", "3434", new Location(906, 10330))));
                 Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }

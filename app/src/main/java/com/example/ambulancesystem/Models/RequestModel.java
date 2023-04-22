@@ -12,6 +12,16 @@ public class RequestModel implements Parcelable {
     public RequestModel() {
     }
 
+    @Override
+    public String toString() {
+        return "RequestModel{" +
+                "id='" + id + '\'' +
+                ", requestStatus=" + requestStatus +
+                ", requestDriver=" + requestDriver +
+                ", requestUser=" + requestUser +
+                '}';
+    }
+
     public RequestModel(String id, Status requestStatus, DriverModel requestDriver, UserModel requestUser) {
         this.id = id;
         this.requestStatus = requestStatus;
