@@ -51,6 +51,11 @@ public class UserRepo {
         loadUser();
     }
 
+    public boolean updateCurrentLocation(Location location){
+        boolean isUserLocationUpdated= updateUserLocation(location);
+        return isUserLocationUpdated;
+    }
+
     /**
      * Fetch user's data from users node
      * based on current user uuid
@@ -135,7 +140,6 @@ public class UserRepo {
 
     /**
      * Update's users current Location
-     * from the
      * */
     private boolean updateUserLocation(Location location){
         //        String currentUser = auth.getCurrentUser().getUid();

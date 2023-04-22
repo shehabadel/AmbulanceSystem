@@ -37,6 +37,9 @@ public class RequestRepo {
         return request;
     }
 
+    /**
+     * Load current request created by a user
+     */
     private void loadRequest() {
         try {
             // String currentUser = auth.getCurrentUser().getUid();
