@@ -19,7 +19,10 @@ public class Location implements Parcelable {
 
     public Location() {
     }
-
+    public Location(double latitude,double longitude){
+        this.latitude=latitude;
+        this.longitude=longitude;
+    }
     public Location(double latitude, double longitude, String address, float accuracy, float speed, float bearing) {
         this.latitude = latitude;
         this.longitude = longitude;
