@@ -5,8 +5,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.ambulancesystem.Models.DriverModel;
 import com.example.ambulancesystem.Models.RequestModel;
 import com.example.ambulancesystem.Models.Status;
+import com.example.ambulancesystem.Models.UserModel;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +39,13 @@ public class RequestRepo {
         return request;
     }
 
+    public boolean createRequest(RequestModel createdRequest) {
+        boolean isRequestCreated = pushRequest(createdRequest);
+        request = new MutableLiveData<>();
+        loadRequest();
+        return isRequestCreated;
+    }
+
     /**
      * Load current request created by a user
      */
@@ -51,16 +60,14 @@ public class RequestRepo {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try {
-                        Log.d("Request", "Status");
                         if (snapshot.exists()) {
                             requestModel = snapshot.getValue(RequestModel.class);
-                            Log.d("RequestStatus", snapshot.child("requestStatus").getValue().toString());
                             requestModel.setRequestStatus(Status.valueOf(snapshot.child("requestStatus").getValue().toString()));
                             requestModel.setId(snapshot.getKey());
                             request.setValue(requestModel);
                         }
                     } catch (Exception e) {
-                        Log.e("loadRequestSnapshot", e.getMessage());
+                        e.printStackTrace();
                     }
                 }
 
@@ -69,7 +76,26 @@ public class RequestRepo {
                 }
             });
         } catch (Exception e) {
-            Log.e("loadRequest", e.getMessage());
+            e.printStackTrace();
         }
+    }
+
+    /**
+     * Create request for a user
+     * and driver
+     */
+    private boolean pushRequest(RequestModel createdRequest) {
+        // String currentUser = auth.getCurrentUser().getUid();
+        String currentUser = "A";
+        boolean isRequestCreated = false;
+        try {
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference requestRef = db.child("requests").child(currentUser);
+            requestRef.setValue(createdRequest);
+            isRequestCreated = true;
+        } catch (Exception e) {
+            Log.e("createRequest", e.getStackTrace().toString());
+        }
+        return isRequestCreated;
     }
 }

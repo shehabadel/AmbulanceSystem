@@ -13,7 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ambulancesystem.Models.Address;
+import com.example.ambulancesystem.Models.DriverModel;
+import com.example.ambulancesystem.Models.Location;
 import com.example.ambulancesystem.Models.RequestModel;
+import com.example.ambulancesystem.Models.Status;
 import com.example.ambulancesystem.Models.UserModel;
 import com.example.ambulancesystem.ViewModels.RequestViewModel;
 import com.example.ambulancesystem.ViewModels.UserViewModel;
@@ -24,6 +27,7 @@ public class SignInActivity extends AppCompatActivity {
     TextView signUpButton;
     TextView signInButton;
     UserViewModel userViewModel;
+    RequestViewModel requestViewModel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -44,6 +48,9 @@ public class SignInActivity extends AppCompatActivity {
             }
         });
 
+        requestViewModel = new ViewModelProvider(this).get(RequestViewModel.class);
+
+
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,11 +70,8 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //userViewModel.updateUserAddress(new Address("alo","alo street",12,32,1));
-//                userViewModel.updateProfile(
-//                        new UserModel("Omar", "ssss", "a7a", "1999-23-1", "01000128323", "Male", "273661618121",
-//                        new Address("cairo", "street1", 17, 19, 22))
-//                );
+                requestViewModel.createRequest(new RequestModel(Status.REQUESTED, new DriverModel("asdasda", "12133218281",
+                        "12312321", "3434", new Location(906, 10330))));
                 Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }

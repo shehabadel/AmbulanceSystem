@@ -28,6 +28,6 @@ public class RequestViewModel extends ViewModel {
      * Create a request
      */
     public void createRequest(RequestModel requestModel) {
-        //RequestRepo.getInstance().createRequest(request);
+        RequestRepo.getInstance().createRequest(requestModel);
     }
 }
