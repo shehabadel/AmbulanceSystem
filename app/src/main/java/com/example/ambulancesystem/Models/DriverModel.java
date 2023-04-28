@@ -5,11 +5,18 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 public class DriverModel implements Parcelable {
+    @SerializedName("driverName")
     String driverName;
+    @SerializedName("driverCarNumber")
     String driverCarNumber;
+    @SerializedName("driverPhoneNumber")
     String driverPhoneNumber;
+    @SerializedName("driverETA")
     String driverEstimatedTime;
+    @SerializedName("driverLocation")
     Location driverLocation;
 
     public DriverModel() {

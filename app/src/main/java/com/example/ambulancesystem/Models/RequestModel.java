@@ -8,8 +8,24 @@ public class RequestModel implements Parcelable {
     Status requestStatus;
     DriverModel requestDriver;
     UserModel requestUser; //Optional
-
+    boolean emergencyMode;
     public RequestModel() {
+    }
+
+    public boolean isEmergencyMode() {
+        return emergencyMode;
+    }
+
+    public void setEmergencyMode(boolean emergencyMode) {
+        this.emergencyMode = emergencyMode;
+    }
+
+    public RequestModel(String id, Status requestStatus, DriverModel requestDriver, UserModel requestUser, boolean emergencyModel) {
+        this.id = id;
+        this.requestStatus = requestStatus;
+        this.requestDriver = requestDriver;
+        this.requestUser = requestUser;
+        this.emergencyMode = emergencyModel;
     }
 
     @Override
