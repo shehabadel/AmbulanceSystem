@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.SerializedName;
 
 public class DriverModel implements Parcelable {
+    @SerializedName("id")
+    int driverID;
     @SerializedName("driverName")
     String driverName;
     @SerializedName("driverCarNumber")
@@ -16,10 +18,57 @@ public class DriverModel implements Parcelable {
     String driverPhoneNumber;
     @SerializedName("driverETA")
     String driverEstimatedTime;
-    @SerializedName("driverLocation")
+    @SerializedName("driverLocationLong")
+    float driverLocationLong;
+    @SerializedName("driverLocationLat")
+    float driverLocationLat;
     Location driverLocation;
 
+    public DriverModel(int driverID, String driverName, String driverCarNumber, String driverPhoneNumber, String driverEstimatedTime, float driverLocationLong, float driverLocationLat, Location driverLocation) {
+        this.driverID = driverID;
+        this.driverName = driverName;
+        this.driverCarNumber = driverCarNumber;
+        this.driverPhoneNumber = driverPhoneNumber;
+        this.driverEstimatedTime = driverEstimatedTime;
+        this.driverLocationLong = driverLocationLong;
+        this.driverLocationLat = driverLocationLat;
+        this.driverLocation = driverLocation;
+    }
+
+    public float getDriverLocationLong() {
+        return driverLocationLong;
+    }
+
+    public void setDriverLocationLong(float driverLocationLong) {
+        this.driverLocationLong = driverLocationLong;
+    }
+
+    public float getDriverLocationLat() {
+        return driverLocationLat;
+    }
+
+    public void setDriverLocationLat(float driverLocationLat) {
+        this.driverLocationLat = driverLocationLat;
+    }
+
     public DriverModel() {
+    }
+
+    public int getDriverID() {
+        return driverID;
+    }
+
+    public void setDriverID(int driverID) {
+        this.driverID = driverID;
+    }
+
+    public DriverModel(int driverID, String driverName, String driverCarNumber, String driverPhoneNumber, String driverEstimatedTime, Location driverLocation) {
+        this.driverID = driverID;
+        this.driverName = driverName;
+        this.driverCarNumber = driverCarNumber;
+        this.driverPhoneNumber = driverPhoneNumber;
+        this.driverEstimatedTime = driverEstimatedTime;
+        this.driverLocation = driverLocation;
     }
 
     public DriverModel(String driverName, String driverCarNumber, String driverPhoneNumber, String driverEstimatedTime, Location driverLocation) {
