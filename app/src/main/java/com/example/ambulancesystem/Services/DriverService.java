@@ -6,7 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DriverService {
-    private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL = "http://192.168.8.104:8080";
     private static Retrofit retrofit = null;
     private static DriverInterface driverInterface;
     static Retrofit getClient() {
@@ -18,6 +18,9 @@ public class DriverService {
         return retrofit;
     }
     public DriverInterface getDriverInterface() {
+        if (driverInterface == null) {
+            getClient();
+        }
         return driverInterface;
     }
 }

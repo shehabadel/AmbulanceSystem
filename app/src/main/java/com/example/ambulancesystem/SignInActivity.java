@@ -19,6 +19,7 @@ import com.example.ambulancesystem.Models.Location;
 import com.example.ambulancesystem.Models.RequestModel;
 import com.example.ambulancesystem.Models.Status;
 import com.example.ambulancesystem.Models.UserModel;
+import com.example.ambulancesystem.Services.DriverService;
 import com.example.ambulancesystem.ViewModels.RequestViewModel;
 import com.example.ambulancesystem.ViewModels.UserViewModel;
 
@@ -36,6 +37,7 @@ public class SignInActivity extends AppCompatActivity {
     UserViewModel userViewModel;
     RequestViewModel requestViewModel;
     DriverInterface driverAPI;
+    DriverService driverService;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,24 +81,30 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
 //                requestViewModel.createRequest(new RequestModel(Status.REQUESTED, new DriverModel("asdasda", "12133218281",
 //                        "12312321", "3434", new Location(906, 10330))));
-                Call<List<DriverModel>> call = driverAPI.getDrivers();
-                call.enqueue(new Callback<List<DriverModel>>() {
-                    @Override
-                    public void onResponse(Call<List<DriverModel>> call, Response<List<DriverModel>> response) {
-                        if(!response.isSuccessful()){
-                            Log.d("driverAPI","---Not successful");
-                        }else{
-                            List<DriverModel> allDrivers = response.body();
-                            for (DriverModel driver:allDrivers){
-                                Log.d("Drivers","----"+driver.getDriverName());
+                driverService = new DriverService();
+                driverAPI = driverService.getDriverInterface();
+                if (driverAPI != null) {
+                    Call<List<DriverModel>> call = driverAPI.getDrivers();
+                    call.enqueue(new Callback<List<DriverModel>>() {
+                        @Override
+                        public void onResponse(Call<List<DriverModel>> call, Response<List<DriverModel>> response) {
+                            if(!response.isSuccessful()){
+                                Log.d("driverAPI","---Not successful");
+                            }else{
+                                List<DriverModel> allDrivers = response.body();
+                                for (DriverModel driver:allDrivers){
+                                    Log.d("Drivers","----"+driver.getDriverName());
+                                }
                             }
                         }
-                    }
-                    @Override
-                    public void onFailure(Call<List<DriverModel>> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<List<DriverModel>> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+                } else {
+                    Log.d("driverAPI", "---DriverInterface is null");
+                }
                 Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
