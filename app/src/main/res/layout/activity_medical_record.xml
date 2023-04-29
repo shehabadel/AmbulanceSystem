@@ -61,7 +61,7 @@
 
 
     <EditText
-        android:id="@+id/phoneNumber"
+        android:id="@+id/email"
         android:layout_width="310dp"
         android:layout_height="48dp"
         android:layout_marginTop="30dp"
@@ -103,7 +103,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phoneNumber">
+        app:layout_constraintTop_toBottomOf="@+id/email">
 
         <RadioButton
             android:id="@+id/maleRadioButton"
@@ -146,8 +146,8 @@
         android:hint="@string/dateOfBirthHint"
         android:inputType="date"
         android:paddingLeft="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/phoneNumber"
-        app:layout_constraintStart_toStartOf="@+id/phoneNumber"
+        app:layout_constraintEnd_toEndOf="@+id/email"
+        app:layout_constraintStart_toStartOf="@+id/email"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
