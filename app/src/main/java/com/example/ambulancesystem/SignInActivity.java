@@ -12,14 +12,22 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.ambulancesystem.Models.Address;
+import com.example.ambulancesystem.Models.DriverModel;
+import com.example.ambulancesystem.Models.Location;
 import com.example.ambulancesystem.Models.RequestModel;
+import com.example.ambulancesystem.Models.Status;
+import com.example.ambulancesystem.Models.UserModel;
 import com.example.ambulancesystem.ViewModels.RequestViewModel;
+import com.example.ambulancesystem.ViewModels.UserViewModel;
 
 public class SignInActivity extends AppCompatActivity {
 
     ImageView backButton;
     TextView signUpButton;
     TextView signInButton;
+    UserViewModel userViewModel;
+    RequestViewModel requestViewModel;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -30,6 +38,18 @@ public class SignInActivity extends AppCompatActivity {
         backButton = (ImageView) findViewById(R.id.backButton);
         signUpButton = (TextView) findViewById(R.id.signUpButton);
         signInButton = (TextView) findViewById(R.id.signInButton);
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.init();
+        userViewModel.getUser().observe(this, new Observer<UserModel>() {
+            @Override
+            public void onChanged(UserModel userModel) {
+                Log.d("UserModel", userModel.toString());
+            }
+        });
+
+        requestViewModel = new ViewModelProvider(this).get(RequestViewModel.class);
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +70,8 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                requestViewModel.createRequest(new RequestModel(Status.REQUESTED, new DriverModel("asdasda", "12133218281",
+                        "12312321", "3434", new Location(906, 10330))));
                 Intent intent = new Intent(SignInActivity.this, ProfileActivity.class);
                 startActivity(intent);
             }
