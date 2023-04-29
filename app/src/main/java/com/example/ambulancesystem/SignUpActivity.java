@@ -130,11 +130,10 @@ public class SignUpActivity extends AppCompatActivity {
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     HashMap<String, Object> userDataMap = new HashMap<>();
                                     userDataMap.put("email", emailInput);
-                                    userDataMap.put("fullName", firstNameInput);
-                                    userDataMap.put("phoneNumber", lastNameInput);
-                                    userDataMap.put("password", passwordInput);
+                                    userDataMap.put("firstName", firstNameInput);
+                                    userDataMap.put("lastName", lastNameInput);
 
-                                    myRef.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(userDataMap)
+                                    myRef.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(userDataMap)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
