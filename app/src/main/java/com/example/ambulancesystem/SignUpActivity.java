@@ -55,8 +55,10 @@ public class SignUpActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
+                finish();
             }
         });
         proceedButton.setOnClickListener(new View.OnClickListener() {
@@ -71,42 +73,35 @@ public class SignUpActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    private void createAccount(){
+    private void createAccount() {
         String firstNameInput = firstName.getText().toString();
         String lastNameInput = lastName.getText().toString();
         String emailInput = email.getText().toString();
         String passwordInput = password.getText().toString();
         String confirmPasswordInput = confirmPassword.getText().toString();
 
-        if (TextUtils.isEmpty(firstNameInput)){
+        if (TextUtils.isEmpty(firstNameInput)) {
             firstName.setError("Enter your first name");
             firstName.requestFocus();
-        }
-        else if (TextUtils.isEmpty(lastNameInput)){
+        } else if (TextUtils.isEmpty(lastNameInput)) {
             lastName.setError("Enter your last name");
             lastName.requestFocus();
-        }
-        else if (TextUtils.isEmpty(emailInput)){
+        } else if (TextUtils.isEmpty(emailInput)) {
             email.setError("Enter your email address");
             email.requestFocus();
-        }
-        else if(!isEmailValid(emailInput)){
+        } else if (!isEmailValid(emailInput)) {
             email.setError("Email address format in invalid");
             email.requestFocus();
-        }
-        else if (TextUtils.isEmpty(passwordInput)){
+        } else if (TextUtils.isEmpty(passwordInput)) {
             password.setError("Enter your password");
             password.requestFocus();
-        }
-        else if(passwordInput.length() < 6){
+        } else if (passwordInput.length() < 6) {
             password.setError("Password must be more than 6 digits");
             password.requestFocus();
-        }
-        else if(!passwordInput.equals(confirmPasswordInput)){
+        } else if (!passwordInput.equals(confirmPasswordInput)) {
             confirmPassword.setError("Password doesn't match");
             confirmPassword.requestFocus();
-        }
-        else{
+        } else {
             loadingBar.setTitle("Register");
             loadingBar.setMessage("Account is being created, just few seconds.");
             loadingBar.setCanceledOnTouchOutside(false);
@@ -115,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private void validate(String firstNameInput, String lastNameInput, String emailInput, String passwordInput){
+    private void validate(String firstNameInput, String lastNameInput, String emailInput, String passwordInput) {
 
         mAuth.createUserWithEmailAndPassword(emailInput, passwordInput)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -137,12 +132,11 @@ public class SignUpActivity extends AppCompatActivity {
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    if(task.isSuccessful()){
+                                                    if (task.isSuccessful()) {
                                                         Toast.makeText(SignUpActivity.this, "Your account has been created successfully", Toast.LENGTH_SHORT).show();
-                                                        Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                                                        Intent intent = new Intent(SignUpActivity.this, MedicalRecordActivity.class);
                                                         startActivity(intent);
-                                                    }
-                                                    else{
+                                                    } else {
                                                         loadingBar.dismiss();
                                                         Toast.makeText(SignUpActivity.this, "Error! Please try again", Toast.LENGTH_SHORT).show();
                                                     }
@@ -156,7 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     Log.d("Failure", "Database failure");
                                 }
                             });
-                        } else{
+                        } else {
                             loadingBar.dismiss();
                             Toast.makeText(SignUpActivity.this, "Email already Exists, or Password less than 6 digits", Toast.LENGTH_SHORT).show();
                         }

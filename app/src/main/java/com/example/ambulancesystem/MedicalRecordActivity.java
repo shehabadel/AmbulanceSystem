@@ -35,8 +35,7 @@ public class MedicalRecordActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MedicalRecordActivity.this, SignUpActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
 
@@ -65,6 +64,7 @@ public class MedicalRecordActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO Save medical record for user in the database;
                 showCongratsPopup();
             }
         });
@@ -136,10 +136,12 @@ public class MedicalRecordActivity extends AppCompatActivity {
         confirmAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MedicalRecordActivity.this, SignUpActivity.class);
-                startActivity(intent);
-
+                //TODO Save the pickup location in the database
                 popupWindow.dismiss();
+                Intent intent = new Intent(MedicalRecordActivity.this, SignInActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
             }
         });
 
