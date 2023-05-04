@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -44,7 +43,7 @@ public class SignUpActivity extends AppCompatActivity {
         proceedButton = (TextView) findViewById(R.id.proceedButton);
         firstName = (EditText) findViewById(R.id.firstName);
         lastName = (EditText) findViewById(R.id.lastName);
-        email = (EditText) findViewById(R.id.email);
+        email = (EditText) findViewById(R.id.phoneNumber);
         password = (EditText) findViewById(R.id.password);
         confirmPassword = (EditText) findViewById(R.id.confirmPassword);
 

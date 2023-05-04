@@ -14,8 +14,39 @@ public class UserModel implements Parcelable {
     String phoneNumber;
     String gender;
     String nationalID;
+    String email;
     Address pickupAddress = new Address();
     Location currentLocation = new Location();
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public UserModel(String userID, String firstName, String lastName, String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID, String email, Address pickupAddress, Location currentLocation) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.medicalCondition = medicalCondition;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.nationalID = nationalID;
+        this.email = email;
+        this.pickupAddress = pickupAddress;
+        this.currentLocation = currentLocation;
+    }
+
+    public UserModel(String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID) {
+        this.medicalCondition = medicalCondition;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.nationalID = nationalID;
+    }
 
     @Override
     public String toString() {
@@ -55,15 +86,15 @@ public class UserModel implements Parcelable {
     }
 
     public UserModel(
-                     String firstName,
-                     String lastName,
-                     String medicalCondition,
-                     String dateOfBirth,
-                     String phoneNumber,
-                     String gender,
-                     String nationalID,
-                     Address pickupAddress,
-                     Location currentLocation) {
+            String firstName,
+            String lastName,
+            String medicalCondition,
+            String dateOfBirth,
+            String phoneNumber,
+            String gender,
+            String nationalID,
+            Address pickupAddress,
+            Location currentLocation) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.medicalCondition = medicalCondition;

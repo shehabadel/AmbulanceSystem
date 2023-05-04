@@ -1,6 +1,7 @@
 package com.example.ambulancesystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -14,24 +15,35 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.example.ambulancesystem.Models.UserModel;
+import com.example.ambulancesystem.ViewModels.UserViewModel;
+
 public class MedicalRecordActivity extends AppCompatActivity {
 
     private RadioGroup genderRadioGroup;
     private RadioButton maleButton;
     private ImageView backButton;
     private TextView signUpButton;
-
+    private TextView phoneNumberTextView;
+    private TextView nationalIDTextView;
+    private TextView dateOfBirthTextView;
+    private TextView medicalConditionTextView;
+    UserViewModel userViewModel;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_record);
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         genderRadioGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
         maleButton = (RadioButton) findViewById(R.id.maleRadioButton);
         backButton = (ImageView) findViewById(R.id.backButton);
         signUpButton = (TextView) findViewById(R.id.signUpButton);
-
+         phoneNumberTextView = (TextView) findViewById(R.id.phoneNumber);
+         nationalIDTextView = (TextView) findViewById(R.id.nationalID);
+         dateOfBirthTextView = (TextView) findViewById(R.id.birthDate);
+         medicalConditionTextView = (TextView) findViewById(R.id.medicalCondition);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,8 +76,14 @@ public class MedicalRecordActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO Save medical record for user in the database;
-                showCongratsPopup();
+                String gender = genderRadioGroup.toString();
+                String phoneNumber = (String) phoneNumberTextView.getText().toString();
+                String nationalID = (String) nationalIDTextView.getText().toString();
+                String dateOfBirth = (String) dateOfBirthTextView.getText().toString();
+                String medicalCondition = (String) medicalConditionTextView.getText().toString();
+                UserModel userDetails = new UserModel(medicalCondition,dateOfBirth,phoneNumber,gender,nationalID);
+                userViewModel.updateProfile(userDetails);
+//                showCongratsPopup();
             }
         });
 

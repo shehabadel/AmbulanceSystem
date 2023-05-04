@@ -9,6 +9,7 @@ import com.example.ambulancesystem.Models.Address;
 import com.example.ambulancesystem.Models.Location;
 import com.example.ambulancesystem.Models.RequestModel;
 import com.example.ambulancesystem.Models.UserModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +26,7 @@ public class UserRepo {
     static UserRepo instance;
     private MutableLiveData<UserModel> user;
     UserModel userModel = new UserModel();
-    //private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public static UserRepo getInstance() {
         if (instance == null) {
@@ -51,8 +52,8 @@ public class UserRepo {
         loadUser();
     }
 
-    public boolean updateCurrentLocation(Location location){
-        boolean isUserLocationUpdated= updateUserLocation(location);
+    public boolean updateCurrentLocation(Location location) {
+        boolean isUserLocationUpdated = updateUserLocation(location);
         return isUserLocationUpdated;
     }
 
@@ -62,8 +63,7 @@ public class UserRepo {
      */
     private void loadUser() {
         try {
-//          String currentUser = auth.getCurrentUser().getUid();
-            String currentUser = "A";
+            String currentUser = auth.getCurrentUser().getUid();
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             Query userQuery = db.child("users").child(currentUser).child("profile");
             Log.d("user", userQuery.toString());
@@ -97,8 +97,7 @@ public class UserRepo {
      * Update user's profile
      */
     private void updateProfileAUX(UserModel userDetails) {
-//        String currentUser= auth.getCurrentUser().getUid();
-        String currentUser = "A";
+        String currentUser = auth.getCurrentUser().getUid();
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             DatabaseReference userProfile = db.child("users").child(currentUser).child("profile");
@@ -124,8 +123,7 @@ public class UserRepo {
      * from users node based on current uuid
      */
     private boolean updateAddress(Address address) {
-//        String currentUser = auth.getCurrentUser().getUid();
-        String currentUser = "A";
+        String currentUser = auth.getCurrentUser().getUid();
         boolean updatedAddress = false;
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -140,10 +138,9 @@ public class UserRepo {
 
     /**
      * Update's users current Location
-     * */
-    private boolean updateUserLocation(Location location){
-        //        String currentUser = auth.getCurrentUser().getUid();
-        String currentUser = "A";
+     */
+    private boolean updateUserLocation(Location location) {
+        String currentUser = auth.getCurrentUser().getUid();
         boolean userLocation = false;
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
