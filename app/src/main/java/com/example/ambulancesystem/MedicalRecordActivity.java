@@ -1,6 +1,7 @@
 package com.example.ambulancesystem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -32,7 +33,9 @@ public class MedicalRecordActivity extends AppCompatActivity {
     private TextView medicalConditionTextView;
     FirebaseAuth auth;
 
+    UserModel user;
     UserViewModel userViewModel;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +44,30 @@ public class MedicalRecordActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-
+        userViewModel.init();
+        userViewModel.getUser().observe(this, new Observer<UserModel>() {
+            @Override
+            public void onChanged(UserModel userModel) {
+                user = new UserModel(userModel, true);
+                phoneNumberTextView.setText(user.getPhoneNumber() != null ? user.getPhoneNumber().toString() : "");
+                nationalIDTextView.setText(user.getNationalID() != null ? user.getNationalID().toString() : "");
+                dateOfBirthTextView.setText(user.getDateOfBirth() != null ? user.getDateOfBirth().toString() : "");
+                medicalConditionTextView.setText(user.getMedicalCondition() != null ? user.getMedicalCondition().toString() : "");
+            }
+        });
         genderRadioGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
         maleButton = (RadioButton) findViewById(R.id.maleRadioButton);
         backButton = (ImageView) findViewById(R.id.backButton);
         signUpButton = (TextView) findViewById(R.id.signUpButton);
-         phoneNumberTextView = (TextView) findViewById(R.id.phoneNumber);
-         nationalIDTextView = (TextView) findViewById(R.id.nationalID);
-         dateOfBirthTextView = (TextView) findViewById(R.id.birthDate);
-         medicalConditionTextView = (TextView) findViewById(R.id.medicalCondition);
+        phoneNumberTextView = (TextView) findViewById(R.id.phoneNumber);
+        nationalIDTextView = (TextView) findViewById(R.id.nationalID);
+        dateOfBirthTextView = (TextView) findViewById(R.id.birthDate);
+        medicalConditionTextView = (TextView) findViewById(R.id.medicalCondition);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 auth.signOut();
-                startActivity(new Intent(MedicalRecordActivity.this,MainActivity.class));
+                startActivity(new Intent(MedicalRecordActivity.this, MainActivity.class));
                 finish();
             }
         });
@@ -93,12 +106,12 @@ public class MedicalRecordActivity extends AppCompatActivity {
                 String nationalID = (String) nationalIDTextView.getText().toString();
                 String dateOfBirth = (String) dateOfBirthTextView.getText().toString();
                 String medicalCondition = (String) medicalConditionTextView.getText().toString();
-                Log.d("medicalRecord::",gender);
-                Log.d("medicalRecord::",phoneNumber);
-                Log.d("medicalRecord::",nationalID);
-                Log.d("medicalRecord::",dateOfBirth);
-                Log.d("medicalRecord::",medicalCondition);
-                UserModel userDetails = new UserModel(medicalCondition,dateOfBirth,phoneNumber,gender,nationalID);
+                Log.d("medicalRecord::", gender);
+                Log.d("medicalRecord::", phoneNumber);
+                Log.d("medicalRecord::", nationalID);
+                Log.d("medicalRecord::", dateOfBirth);
+                Log.d("medicalRecord::", medicalCondition);
+                UserModel userDetails = new UserModel(medicalCondition, dateOfBirth, phoneNumber, gender, nationalID);
                 userViewModel.updateProfile(userDetails);
 //                showCongratsPopup();
             }
@@ -142,6 +155,7 @@ public class MedicalRecordActivity extends AppCompatActivity {
 
         popupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
+
     private void showAddressPopup() {
         View popupView = getLayoutInflater().inflate(R.layout.saved_address_popup, null);
 

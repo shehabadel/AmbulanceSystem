@@ -16,6 +16,10 @@ public class Location implements Parcelable {
                 ", longitude=" + longitude +
                 '}';
     }
+    public Location(Location original) {
+        this.latitude = original.latitude;
+        this.longitude = original.longitude;
+    }
 
     public Location() {
     }

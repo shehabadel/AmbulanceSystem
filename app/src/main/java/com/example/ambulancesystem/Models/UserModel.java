@@ -21,6 +21,33 @@ public class UserModel implements Parcelable {
     public String getEmail() {
         return email;
     }
+    public UserModel(UserModel other, boolean deepClone) {
+        if (deepClone) {
+            this.userID = other.userID;
+            this.firstName = other.firstName;
+            this.lastName = other.lastName;
+            this.medicalCondition = other.medicalCondition;
+            this.dateOfBirth = other.dateOfBirth;
+            this.phoneNumber = other.phoneNumber;
+            this.gender = other.gender;
+            this.nationalID = other.nationalID;
+            this.email = other.email;
+            this.pickupAddress = new Address(other.pickupAddress);
+            this.currentLocation = new Location(other.currentLocation);
+        } else {
+            this.userID = other.userID;
+            this.firstName = other.firstName;
+            this.lastName = other.lastName;
+            this.medicalCondition = other.medicalCondition;
+            this.dateOfBirth = other.dateOfBirth;
+            this.phoneNumber = other.phoneNumber;
+            this.gender = other.gender;
+            this.nationalID = other.nationalID;
+            this.email = other.email;
+            this.pickupAddress = other.pickupAddress;
+            this.currentLocation = other.currentLocation;
+        }
+    }
 
     public void setEmail(String email) {
         this.email = email;

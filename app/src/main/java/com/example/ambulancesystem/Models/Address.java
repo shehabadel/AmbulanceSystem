@@ -15,6 +15,13 @@ public class Address implements Parcelable {
     public Address() {
 
     }
+    public Address(Address original) {
+        this.city = original.city;
+        this.streetName = original.streetName;
+        this.buildNumber = original.buildNumber;
+        this.floorNumber = original.floorNumber;
+        this.aptNumber = original.aptNumber;
+    }
 
     @Override
     public String toString() {
