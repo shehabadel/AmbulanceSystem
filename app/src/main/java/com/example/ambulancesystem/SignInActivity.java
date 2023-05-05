@@ -85,6 +85,8 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                 startActivity(intent);
+                finish();
+
             }
         });
 
@@ -93,13 +95,14 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
                 startActivity(intent);
+                finish();
+
             }
         });
 
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 signIn();
 //                requestViewModel.createRequest(new RequestModel(Status.REQUESTED, new DriverModel("asdasda", "12133218281",
 //                        "12312321", "3434", new Location(906, 10330))));
@@ -137,23 +140,20 @@ public class SignInActivity extends AppCompatActivity {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    private void signIn(){
+    private void signIn() {
         String emailInput = emailSignIn.getText().toString();
         String passwordInput = passwordSignIn.getText().toString();
 
-        if (TextUtils.isEmpty(emailInput)){
+        if (TextUtils.isEmpty(emailInput)) {
             emailSignIn.setError("Enter your email address");
             emailSignIn.requestFocus();
-        }
-        else if (TextUtils.isEmpty(passwordInput)){
+        } else if (TextUtils.isEmpty(passwordInput)) {
             passwordSignIn.setError("Enter your password");
             passwordSignIn.requestFocus();
-        }
-        else if(!isEmailValid(emailInput)){
+        } else if (!isEmailValid(emailInput)) {
             emailSignIn.setError("Email address format in invalid");
             emailSignIn.requestFocus();
-        }
-        else{
+        } else {
             loadingBar.setTitle("Sign In");
             loadingBar.setMessage("Account credentials are being validated, just few seconds.");
             loadingBar.setCanceledOnTouchOutside(false);
@@ -162,21 +162,21 @@ public class SignInActivity extends AppCompatActivity {
         }
     }
 
-    private void validateSignIn(String emailInput, String passwordInput){
+    private void validateSignIn(String emailInput, String passwordInput) {
         mAuth.signInWithEmailAndPassword(emailInput, passwordInput)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            Toast.makeText(SignInActivity.this,"Signed In successfully", Toast.LENGTH_SHORT).show();
-
+                            Toast.makeText(SignInActivity.this, "Signed In successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(SignInActivity.this, MedicalRecordActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
+                            finish();
+
                         } else {
                             loadingBar.dismiss();
-                            System.out.println("Error"+task.getException().getMessage());
-
+                            System.out.println("Error" + task.getException().getMessage());
                             Toast.makeText(SignInActivity.this, "Email or password incorrect", Toast.LENGTH_SHORT).show();
                         }
                     }

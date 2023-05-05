@@ -35,13 +35,19 @@ public class UserViewModel extends ViewModel {
     }
 
     /**
+     * set user's profile details including
+     * pickupAddress and current Location
+     */
+    public void setProfile(UserModel userDetails) {
+        UserRepo.getInstance().setProfile(userDetails);
+    }
+    /**
      * Update user's profile details including
      * pickupAddress and current Location
      */
     public void updateProfile(UserModel userDetails) {
         UserRepo.getInstance().updateProfile(userDetails);
     }
-
     /**
      * Update user's current location
      */

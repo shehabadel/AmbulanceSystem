@@ -6,16 +6,74 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class UserModel implements Parcelable {
-    String userID;
-    String firstName;
-    String lastName;
-    String medicalCondition;
-    String dateOfBirth;
-    String phoneNumber;
-    String gender;
-    String nationalID;
-    Address pickupAddress = new Address();
-    Location currentLocation = new Location();
+    public String userID;
+    public String  firstName;
+    public String  lastName;
+    public String  medicalCondition;
+    public String  dateOfBirth;
+    public String  phoneNumber;
+    public String  gender;
+    public String  nationalID;
+    public String  email;
+    public Address pickupAddress;
+    public Location currentLocation;
+
+    public String getEmail() {
+        return email;
+    }
+    public UserModel(UserModel other, boolean deepClone) {
+        if (deepClone) {
+            this.userID = other.userID;
+            this.firstName = other.firstName;
+            this.lastName = other.lastName;
+            this.medicalCondition = other.medicalCondition;
+            this.dateOfBirth = other.dateOfBirth;
+            this.phoneNumber = other.phoneNumber;
+            this.gender = other.gender;
+            this.nationalID = other.nationalID;
+            this.email = other.email;
+            this.pickupAddress = new Address(other.pickupAddress);
+            this.currentLocation = new Location(other.currentLocation);
+        } else {
+            this.userID = other.userID;
+            this.firstName = other.firstName;
+            this.lastName = other.lastName;
+            this.medicalCondition = other.medicalCondition;
+            this.dateOfBirth = other.dateOfBirth;
+            this.phoneNumber = other.phoneNumber;
+            this.gender = other.gender;
+            this.nationalID = other.nationalID;
+            this.email = other.email;
+            this.pickupAddress = other.pickupAddress;
+            this.currentLocation = other.currentLocation;
+        }
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public UserModel(String userID, String firstName, String lastName, String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID, String email, Address pickupAddress, Location currentLocation) {
+        this.userID = userID;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.medicalCondition = medicalCondition;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.nationalID = nationalID;
+        this.email = email;
+        this.pickupAddress = pickupAddress;
+        this.currentLocation = currentLocation;
+    }
+
+    public UserModel(String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID) {
+        this.medicalCondition = medicalCondition;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.nationalID = nationalID;
+    }
 
     @Override
     public String toString() {
@@ -28,10 +86,11 @@ public class UserModel implements Parcelable {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", gender='" + gender + '\'' +
                 ", nationalID='" + nationalID + '\'' +
-                ", pickupAddress=" + pickupAddress.toString() +
-                ", currentLocation=" + currentLocation.toString() +
+                ", pickupAddress=" + (pickupAddress != null ? pickupAddress.toString() : "null") +
+                ", currentLocation=" + (currentLocation != null ? currentLocation.toString() : "null") +
                 '}';
     }
+
 
     public UserModel(String firstName, String lastName, String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID, Address pickupAddress) {
         this.firstName = firstName;
@@ -55,15 +114,15 @@ public class UserModel implements Parcelable {
     }
 
     public UserModel(
-                     String firstName,
-                     String lastName,
-                     String medicalCondition,
-                     String dateOfBirth,
-                     String phoneNumber,
-                     String gender,
-                     String nationalID,
-                     Address pickupAddress,
-                     Location currentLocation) {
+            String firstName,
+            String lastName,
+            String medicalCondition,
+            String dateOfBirth,
+            String phoneNumber,
+            String gender,
+            String nationalID,
+            Address pickupAddress,
+            Location currentLocation) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.medicalCondition = medicalCondition;
@@ -100,6 +159,8 @@ public class UserModel implements Parcelable {
     };
 
     public UserModel() {
+        this.pickupAddress = new Address();
+        this.currentLocation = new Location();
     }
 
     public String getUserID() {

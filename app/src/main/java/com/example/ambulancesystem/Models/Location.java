@@ -6,8 +6,8 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Location implements Parcelable {
-    private double latitude;
-    private double longitude;
+    public double latitude;
+    public double longitude;
 
     @Override
     public String toString() {
@@ -15,6 +15,10 @@ public class Location implements Parcelable {
                 "latitude=" + latitude +
                 ", longitude=" + longitude +
                 '}';
+    }
+    public Location(Location original) {
+        this.latitude = original.latitude;
+        this.longitude = original.longitude;
     }
 
     public Location() {

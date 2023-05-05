@@ -9,6 +9,7 @@ import com.example.ambulancesystem.Models.DriverModel;
 import com.example.ambulancesystem.Models.RequestModel;
 import com.example.ambulancesystem.Models.Status;
 import com.example.ambulancesystem.Models.UserModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +25,7 @@ public class RequestRepo {
     static RequestRepo instance;
     private MutableLiveData<RequestModel> request;
     RequestModel requestModel = new RequestModel();
+    private FirebaseAuth auth =  FirebaseAuth.getInstance();
 
     public static RequestRepo getInstance() {
         if (instance == null) {
@@ -51,8 +53,7 @@ public class RequestRepo {
      */
     private void loadRequest() {
         try {
-            // String currentUser = auth.getCurrentUser().getUid();
-            String currentUser = "A";
+             String currentUser = auth.getCurrentUser().getUid();
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             Query requestQuery = db.child("requests").child(currentUser);
             Log.d("query", requestQuery.toString());
@@ -85,8 +86,7 @@ public class RequestRepo {
      * and driver
      */
     private boolean pushRequest(RequestModel createdRequest) {
-        // String currentUser = auth.getCurrentUser().getUid();
-        String currentUser = "A";
+         String currentUser = auth.getCurrentUser().getUid();
         boolean isRequestCreated = false;
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
