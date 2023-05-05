@@ -6,17 +6,17 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class UserModel implements Parcelable {
-    String userID;
-    String firstName;
-    String lastName;
-    String medicalCondition;
-    String dateOfBirth;
-    String phoneNumber;
-    String gender;
-    String nationalID;
-    String email;
-    Address pickupAddress = new Address();
-    Location currentLocation = new Location();
+    public String userID;
+    public String  firstName;
+    public String  lastName;
+    public String  medicalCondition;
+    public String  dateOfBirth;
+    public String  phoneNumber;
+    public String  gender;
+    public String  nationalID;
+    public String  email;
+    public Address pickupAddress;
+    public Location currentLocation;
 
     public String getEmail() {
         return email;
@@ -59,10 +59,11 @@ public class UserModel implements Parcelable {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", gender='" + gender + '\'' +
                 ", nationalID='" + nationalID + '\'' +
-                ", pickupAddress=" + pickupAddress.toString() +
-                ", currentLocation=" + currentLocation.toString() +
+                ", pickupAddress=" + (pickupAddress != null ? pickupAddress.toString() : "null") +
+                ", currentLocation=" + (currentLocation != null ? currentLocation.toString() : "null") +
                 '}';
     }
+
 
     public UserModel(String firstName, String lastName, String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID, Address pickupAddress) {
         this.firstName = firstName;
@@ -131,6 +132,8 @@ public class UserModel implements Parcelable {
     };
 
     public UserModel() {
+        this.pickupAddress = new Address();
+        this.currentLocation = new Location();
     }
 
     public String getUserID() {

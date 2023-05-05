@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * UserRepo needed to save user's profile data,
@@ -27,7 +28,7 @@ import java.util.HashMap;
  */
 public class UserRepo {
     static UserRepo instance;
-    private MutableLiveData<UserModel> user;
+    private MutableLiveData<UserModel> user = new MutableLiveData<>();
     UserModel userModel = new UserModel();
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
@@ -39,7 +40,7 @@ public class UserRepo {
     }
 
     public MutableLiveData<UserModel> getUser() {
-        user = new MutableLiveData<>();
+//        user = new MutableLiveData<>();
         userModel = new UserModel();
         loadUser();
         user.setValue(userModel);
@@ -54,10 +55,12 @@ public class UserRepo {
         setProfileAUX(userDetails);
         loadUser();
     }
+
     public void updateProfile(UserModel userDetails) {
         updateProfileAUX(userDetails);
         loadUser();
     }
+
     public boolean updateCurrentLocation(Location location) {
         boolean isUserLocationUpdated = updateUserLocation(location);
         return isUserLocationUpdated;
@@ -82,8 +85,10 @@ public class UserRepo {
                         userModel = snapshot.getValue(UserModel.class);
                         Log.d("userSnapshot", userModel.toString());
                         Address userAddress = snapshot.child("pickupAddress").getValue(Address.class);
-                        Log.d("userAddress", userAddress.toString());
-                        userModel.setPickupAddress(userAddress);
+                        if (userAddress != null) {
+                            Log.d("userAddress", userAddress.toString());
+                            userModel.setPickupAddress(userAddress);
+                        }
                         userModel.setUserID(currentUser);
                         user.setValue(userModel);
                     }
@@ -123,24 +128,29 @@ public class UserRepo {
             e.printStackTrace();
         }
     }
+
     /**
      * Update user's profile
-     * */
+     */
     private void updateProfileAUX(UserModel userDetails) {
         String currentUser = auth.getCurrentUser().getUid();
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             DatabaseReference userProfile = db.child("users").child(currentUser).child("profile");
-            userProfile.setValue(userDetails);
             HashMap<String, Object> updates = new HashMap<>();
 
             // Get all the fields of the UserModel class using reflection
-            Field[] fields = userDetails.getClass().getFields();
+            Field[] fields = UserModel.class.getDeclaredFields();
 
             for (Field field : fields) {
+
                 // Get the name of the field
                 String fieldName = field.getName();
 
+                // Skip the "CREATOR" field
+                if (fieldName.equals("CREATOR")) {
+                    continue;
+                }
                 // Get the value of the field from the userDetails object
                 field.setAccessible(true);
                 Object fieldValue = field.get(userDetails);
@@ -149,8 +159,14 @@ public class UserRepo {
                 if (fieldValue != null) {
                     updates.put(fieldName, fieldValue);
                 }
-                Log.d("kkkk",updates.toString());
+
             }
+            for (Map.Entry<String, Object> entry : updates.entrySet()) {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                Log.d("Update", key + ": " + value);
+            }
+
             userProfile.updateChildren(updates);
         } catch (Exception e) {
             Log.e("updateProfile", e.getMessage());
@@ -158,6 +174,7 @@ public class UserRepo {
             e.printStackTrace();
         }
     }
+
     /**
      * Update user's pickup address
      * from users node based on current uuid

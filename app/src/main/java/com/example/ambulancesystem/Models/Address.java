@@ -6,11 +6,11 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 
 public class Address implements Parcelable {
-    String city;
-    String streetName;
-    int buildNumber;
-    int floorNumber;
-    int aptNumber;
+    public String city;
+    public String streetName;
+    public int buildNumber;
+    public int floorNumber;
+    public int aptNumber;
 
     public Address() {
 
