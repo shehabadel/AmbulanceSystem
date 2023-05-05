@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.ambulancesystem.Models.UserModel;
 import com.example.ambulancesystem.ViewModels.UserViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MedicalRecordActivity extends AppCompatActivity {
 
@@ -28,12 +29,16 @@ public class MedicalRecordActivity extends AppCompatActivity {
     private TextView nationalIDTextView;
     private TextView dateOfBirthTextView;
     private TextView medicalConditionTextView;
+    FirebaseAuth auth;
+
     UserViewModel userViewModel;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_record);
+        auth = FirebaseAuth.getInstance();
+
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
         genderRadioGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
@@ -47,6 +52,8 @@ public class MedicalRecordActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                auth.signOut();
+                startActivity(new Intent(MedicalRecordActivity.this,MainActivity.class));
                 finish();
             }
         });
@@ -76,7 +83,11 @@ public class MedicalRecordActivity extends AppCompatActivity {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String gender = genderRadioGroup.toString();
+                // get selected radio button from radioGroup
+                int selectedId = genderRadioGroup.getCheckedRadioButtonId();
+                // find the radiobutton by returned id
+                RadioButton radioButton = (RadioButton) findViewById(selectedId);
+                String gender = radioButton.getText().toString();
                 String phoneNumber = (String) phoneNumberTextView.getText().toString();
                 String nationalID = (String) nationalIDTextView.getText().toString();
                 String dateOfBirth = (String) dateOfBirthTextView.getText().toString();

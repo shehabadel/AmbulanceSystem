@@ -127,7 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     userDataMap.put("firstName", firstNameInput);
                                     userDataMap.put("lastName", lastNameInput);
 
-                                    myRef.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).updateChildren(userDataMap)
+                                    myRef.child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("profile").updateChildren(userDataMap)
                                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {

@@ -17,6 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+
 /**
  * UserRepo needed to save user's profile data,
  * fetch user's profile data, fetch current location
@@ -47,11 +50,14 @@ public class UserRepo {
         return updateAddress(address);
     }
 
+    public void setProfile(UserModel userDetails) {
+        setProfileAUX(userDetails);
+        loadUser();
+    }
     public void updateProfile(UserModel userDetails) {
         updateProfileAUX(userDetails);
         loadUser();
     }
-
     public boolean updateCurrentLocation(Location location) {
         boolean isUserLocationUpdated = updateUserLocation(location);
         return isUserLocationUpdated;
@@ -94,9 +100,9 @@ public class UserRepo {
     }
 
     /**
-     * Update user's profile
+     * set user's profile
      */
-    private void updateProfileAUX(UserModel userDetails) {
+    private void setProfileAUX(UserModel userDetails) {
         String currentUser = auth.getCurrentUser().getUid();
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -117,7 +123,41 @@ public class UserRepo {
             e.printStackTrace();
         }
     }
+    /**
+     * Update user's profile
+     * */
+    private void updateProfileAUX(UserModel userDetails) {
+        String currentUser = auth.getCurrentUser().getUid();
+        try {
+            DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference userProfile = db.child("users").child(currentUser).child("profile");
+            userProfile.setValue(userDetails);
+            HashMap<String, Object> updates = new HashMap<>();
 
+            // Get all the fields of the UserModel class using reflection
+            Field[] fields = userDetails.getClass().getFields();
+
+            for (Field field : fields) {
+                // Get the name of the field
+                String fieldName = field.getName();
+
+                // Get the value of the field from the userDetails object
+                field.setAccessible(true);
+                Object fieldValue = field.get(userDetails);
+
+                // Add the field and its value to the updates HashMap
+                if (fieldValue != null) {
+                    updates.put(fieldName, fieldValue);
+                }
+                Log.d("kkkk",updates.toString());
+            }
+            userProfile.updateChildren(updates);
+        } catch (Exception e) {
+            Log.e("updateProfile", e.getMessage());
+            Log.e("updateprofstack", e.getStackTrace().toString());
+            e.printStackTrace();
+        }
+    }
     /**
      * Update user's pickup address
      * from users node based on current uuid
