@@ -32,29 +32,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         driverService = new DriverService();
         driverAPI = driverService.getDriverInterface();
-        if (driverAPI != null) {
-            Call<List<DriverModel>> call = driverAPI.getDrivers();
-            call.enqueue(new Callback<List<DriverModel>>() {
-                @Override
-                public void onResponse(Call<List<DriverModel>> call, Response<List<DriverModel>> response) {
-                    if (!response.isSuccessful()) {
-                        Log.d("driverAPI", "---Not successful");
-                    } else {
-                        List<DriverModel> allDrivers = response.body();
-                        for (DriverModel driver : allDrivers) {
-                            Log.d("Driveaas", "----" + driver.getDriverName());
-                        }
-                    }
-                }
+        driverService.getAllDrivers(new DriverService.DriversCallback() {
+            @Override
+            public void onSuccess(List<DriverModel> driverModels) {
+                for (DriverModel driver : driverModels) {
+                    Log.d("Driveaas", "----" + driver.getDriverName());
+                };
+            }
 
-                @Override
-                public void onFailure(Call<List<DriverModel>> call, Throwable t) {
-                    Log.d("driverAPI", "---Call failed: " + t.getMessage());
-                }
-            });
-        } else {
-            Log.d("driverAPI", "---DriverInterface is null");
-        }
+            @Override
+            public void onError(String errorMessage) {
+                // Handle the error here
+            }
+        });
+
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         if (user != null) {
