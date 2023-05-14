@@ -12,11 +12,18 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Homepage extends AppCompatActivity {
+
     Switch emergencySwitch;
+    TextView requestAmbulanceButton;
+    ImageButton logoutButton;
+    RelativeLayout accountButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -25,6 +32,35 @@ public class Homepage extends AppCompatActivity {
         setContentView(R.layout.activity_ambulance_home_page);
 
         emergencySwitch = findViewById(R.id.emergencySwitch);
+        requestAmbulanceButton = findViewById(R.id.requestAmbulanceButton);
+        logoutButton = findViewById(R.id.logoutButton);
+        accountButton = findViewById(R.id.accountButtonHome);
+
+        accountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Homepage.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(Homepage.this, SignInActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        requestAmbulanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Homepage.this, MapsActivity2.class);
+                startActivity(intent);
+            }
+        });
 
         emergencySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
