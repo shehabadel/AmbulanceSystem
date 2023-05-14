@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="28dp"
                 android:text="Estimated Time of Arrival"
-                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                app:layout_constraintBottom_toTopOf="@+id/cancelRequestButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -133,13 +133,13 @@
                 android:text="12 mins"
                 android:textSize="16sp"
                 android:textColor="#2155CD"
-                app:layout_constraintBottom_toTopOf="@+id/textView2"
+                app:layout_constraintBottom_toTopOf="@+id/cancelRequestButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.498"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/cancelRequestButton"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="25dp"

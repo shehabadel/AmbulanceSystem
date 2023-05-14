@@ -55,6 +55,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     TextView lang;
     ImageButton backbtn;
     ImageView avatar;
+    TextView cancelRequestButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -66,6 +67,16 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         lang = (TextView) findViewById(R.id.lang);
         // Initialize location manager
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+        cancelRequestButton = findViewById(R.id.cancelRequestButton);
+        cancelRequestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: cancel request from database
+                Intent intent = new Intent(MapsActivity2.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
 
         backbtn = findViewById(R.id.backButton);
         backbtn.setOnClickListener(new View.OnClickListener() {
