@@ -5,11 +5,16 @@ import android.os.Parcelable;
 
 public class RequestModel implements Parcelable {
     String id;
+    String requestCase;
     Status requestStatus;
     DriverModel requestDriver;
     UserModel requestUser; //Optional
     boolean emergencyMode;
     public RequestModel() {
+    }
+
+    public RequestModel(String requestCase) {
+        this.requestCase = requestCase;
     }
 
     public boolean isEmergencyMode() {
@@ -62,6 +67,14 @@ public class RequestModel implements Parcelable {
     public RequestModel(Status requestStatus, DriverModel requestDriver) {
         this.requestStatus = requestStatus;
         this.requestDriver = requestDriver;
+    }
+
+    public String getRequestCase() {
+        return requestCase;
+    }
+
+    public void setRequestCase(String requestCase) {
+        this.requestCase = requestCase;
     }
 
     protected RequestModel(Parcel in) {

@@ -86,18 +86,10 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-    </LinearLayout>
-
     <RelativeLayout
         android:id="@+id/middle_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bar"
@@ -125,7 +117,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/cancelRequestButton"
+                android:id="@+id/requestAmbulanceButton"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -148,7 +140,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cancelRequestButton">
+                app:layout_constraintTop_toBottomOf="@+id/requestAmbulanceButton">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -166,6 +158,18 @@
                     android:minHeight="48dp"/>
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/logoutButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/circle_shape"
+            android:elevation="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/logout" />
 
     </RelativeLayout>
 
