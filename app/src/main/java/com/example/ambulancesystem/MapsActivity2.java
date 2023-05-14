@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +42,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.ambulancesystem.databinding.ActivityMaps2Binding;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -57,6 +59,9 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     ImageButton backbtn;
     ImageView avatar;
     TextView cancelRequestButton;
+    RelativeLayout homeButton;
+    RelativeLayout accountButton;
+    ImageView logoutButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -74,6 +79,37 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             @Override
             public void onClick(View view) {
                 //TODO: cancel request from database
+                Intent intent = new Intent(MapsActivity2.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
+
+        logoutButton = findViewById(R.id.logoutButtonRequest);
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MapsActivity2.this, SignInActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        homeButton = findViewById(R.id.homeButtonProfile);
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapsActivity2.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
+
+        accountButton = findViewById(R.id.accountButtonRequest);
+
+        accountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity2.this, Homepage.class);
                 startActivity(intent);
             }

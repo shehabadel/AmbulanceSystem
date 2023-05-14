@@ -9,7 +9,7 @@
 
 
     <ImageButton
-        android:id="@+id/logoutButton"
+        android:id="@+id/logoutButtonRequest"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginTop="30dp"
@@ -55,7 +55,7 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/accountButton"
+                android:id="@+id/accountButtonRequest"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:clickable="true"
@@ -85,7 +85,7 @@
 
 
             <RelativeLayout
-                android:id="@+id/homeButton"
+                android:id="@+id/homeButtonRequest"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_marginBottom="15dp"
