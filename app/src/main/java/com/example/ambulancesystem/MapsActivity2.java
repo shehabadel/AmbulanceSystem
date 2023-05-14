@@ -95,7 +95,7 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
-        homeButton = findViewById(R.id.homeButtonProfile);
+        homeButton = findViewById(R.id.homeButtonRequest);
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override

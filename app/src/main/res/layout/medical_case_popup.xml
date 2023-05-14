@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="263dp"
-    android:layout_height="344dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:padding="16dp"
     android:gravity="center"
     android:background="@drawable/rounded_popup"
@@ -26,13 +26,25 @@
         android:layout_marginBottom="15dp"
         android:fontFamily="monospace"
         android:gravity="center"
-        android:text="Pickup Location?"
+        android:text="Medical Case"
         android:textColor="#2155cd"
         android:textSize="23sp"
         android:textStyle="bold" />
 
+    <EditText
+        android:id="@+id/medicalCaseInput"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:background="@drawable/edit_text_rounded"
+        android:elevation="8dp"
+        android:paddingLeft="5dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="30dp"
+        android:hint="Please enter the medical case..." />
+
     <TextView
-        android:id="@+id/detect_current_location"
+        android:id="@+id/requestMedicalCase"
         android:layout_width="220dp"
         android:layout_height="56dp"
         android:layout_marginStart="25dp"
@@ -42,12 +54,12 @@
         android:elevation="8dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="Detect Current Location"
+        android:text="Request"
         android:textColor="@color/white"
         android:textSize="19sp"
         android:textStyle="bold" />
     <TextView
-        android:id="@+id/saved_location"
+        android:id="@+id/cancelMedicalCase"
         android:layout_width="220dp"
         android:layout_height="56dp"
         android:layout_marginStart="25dp"
@@ -57,7 +69,7 @@
         android:fontFamily="sans-serif"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="Saved Location"
+        android:text="Cancel"
         android:textColor="@color/white"
         android:textSize="19sp"
         android:textStyle="bold" />

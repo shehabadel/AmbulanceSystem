@@ -57,8 +57,9 @@ public class Homepage extends AppCompatActivity {
         requestAmbulanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Homepage.this, MapsActivity2.class);
-                startActivity(intent);
+                showMedicalCasePopup();
+//                Intent intent = new Intent(Homepage.this, MapsActivity2.class);
+//                startActivity(intent);
             }
         });
 
@@ -70,6 +71,45 @@ public class Homepage extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void showMedicalCasePopup(){
+        View popupView = getLayoutInflater().inflate(R.layout.medical_case_popup, null);
+
+        int width = 1000;
+        int height = 1400;
+        boolean focusable = true;
+
+        PopupWindow popupWindow = new PopupWindow(
+                popupView, width, height, focusable);
+
+        popupWindow.setElevation(10);
+
+        popupWindow.setAnimationStyle(android.R.style.Animation_Translucent);
+
+        TextView requestMedicalCase = popupView.findViewById(R.id.requestMedicalCase);
+        TextView cancelMedicalCase = popupView.findViewById(R.id.cancelMedicalCase);
+
+        requestMedicalCase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO Save the pickup location in the database
+                popupWindow.dismiss();
+                Intent intent = new Intent(Homepage.this, MapsActivity2.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        cancelMedicalCase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            }
+        });
+
+        popupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
     }
     private void showEmergencyPopup() {
         View popupView = getLayoutInflater().inflate(R.layout.emergency_popup, null);
