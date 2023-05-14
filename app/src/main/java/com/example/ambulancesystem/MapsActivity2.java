@@ -10,6 +10,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -18,6 +19,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +53,8 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
     Location mLastLocation;
     TextView lat;
     TextView lang;
+    ImageButton backbtn;
+    ImageView avatar;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -60,6 +67,22 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
         // Initialize location manager
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        backbtn = findViewById(R.id.backButton);
+        backbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity2.this, Homepage.class);
+                startActivity(intent);
+            }
+        });
+        avatar = findViewById(R.id.avatar_image);
+        avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapsActivity2.this, ProfileActivity.class);
+                startActivity(intent);
+            }
+        });
         // Request location updates
         if (mLocationManager != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

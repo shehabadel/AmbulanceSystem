@@ -5,25 +5,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
-public class ProfileActivity extends AppCompatActivity {
-
-    private ImageView backButton;
+public class Homepage extends AppCompatActivity {
+    ImageView avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_ambulance_home_page);
 
-        backButton = (ImageView) findViewById(R.id.backButton);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
+        avatar = findViewById(R.id.avatar_image);
+        avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ProfileActivity.this, Homepage.class);
+                Intent intent = new Intent(Homepage.this, ProfileActivity.class);
                 startActivity(intent);
-             }
+            }
         });
+
+
     }
 }
