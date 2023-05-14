@@ -113,7 +113,7 @@ public class MedicalRecordActivity extends AppCompatActivity {
                 Log.d("medicalRecord::", medicalCondition);
                 UserModel userDetails = new UserModel(medicalCondition, dateOfBirth, phoneNumber, gender, nationalID);
                 userViewModel.updateProfile(userDetails);
-//                showCongratsPopup();
+                showCongratsPopup();
             }
         });
 
@@ -170,8 +170,8 @@ public class MedicalRecordActivity extends AppCompatActivity {
 
 
         int width = 1000;
-        int height = 1200;
-        boolean focusable = false;
+        int height = 1400;
+        boolean focusable = true;
 
         PopupWindow popupWindow = new PopupWindow(
                 popupView, width, height, focusable);
@@ -187,7 +187,7 @@ public class MedicalRecordActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //TODO Save the pickup location in the database
                 popupWindow.dismiss();
-                Intent intent = new Intent(MedicalRecordActivity.this, SignInActivity.class);
+                Intent intent = new Intent(MedicalRecordActivity.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();

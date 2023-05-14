@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -86,14 +87,14 @@ public class MapsActivity2 extends AppCompatActivity implements OnMapReadyCallba
                 startActivity(intent);
             }
         });
-        avatar = findViewById(R.id.avatar_image);
-        avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MapsActivity2.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+//        avatar = findViewById(R.id.avatar_image);
+//        avatar.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MapsActivity2.this, ProfileActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         // Request location updates
         if (mLocationManager != null) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {

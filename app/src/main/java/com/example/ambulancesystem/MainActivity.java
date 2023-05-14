@@ -48,10 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
-        if (user != null) {
-            startActivity(new Intent(MainActivity.this, MedicalRecordActivity.class));
-            finish();
-        }
+//        if (user != null) {
+//            startActivity(new Intent(MainActivity.this, MainActivity.class));
+//            finish();
+//        }
         getStartedButton = (TextView) findViewById(R.id.getStartedButton);
         getStartedButton.setOnClickListener(new View.OnClickListener() {
             @Override
