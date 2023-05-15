@@ -38,6 +38,7 @@
         android:background="@drawable/edit_text_rounded"
         android:elevation="8dp"
         android:paddingLeft="5dp"
+        android:imeOptions="actionDone"
         android:textSize="16sp"
         android:textColor="@color/black"
         android:layout_margin="30dp"

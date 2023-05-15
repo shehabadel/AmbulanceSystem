@@ -5,12 +5,17 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -35,6 +40,7 @@ public class MedicalRecordActivity extends AppCompatActivity {
 
     UserModel user;
     UserViewModel userViewModel;
+    private EditText medicalConditionEditText;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,6 +48,19 @@ public class MedicalRecordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medical_record);
         auth = FirebaseAuth.getInstance();
+
+        medicalConditionEditText = findViewById(R.id.medicalCondition);
+
+        medicalConditionEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    hideKeyboard();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         userViewModel.init();
@@ -118,6 +137,10 @@ public class MedicalRecordActivity extends AppCompatActivity {
         });
 
     }
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(medicalConditionEditText.getWindowToken(), 0);
+    }
 
     private void showCongratsPopup() {
         View popupView = getLayoutInflater().inflate(R.layout.congrats_popup, null);
@@ -149,48 +172,9 @@ public class MedicalRecordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 popupWindow.dismiss();
-                showAddressPopup();
-            }
-        });
-
-        popupWindow.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
-    }
-
-    private void showAddressPopup() {
-        View popupView = getLayoutInflater().inflate(R.layout.saved_address_popup, null);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
-                WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-        WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.alpha = 0.5f; // set the transparency here
-        params.dimAmount = 0.5f;
-        getWindow().setAttributes(params);
-
-
-        int width = 1000;
-        int height = 1400;
-        boolean focusable = true;
-
-        PopupWindow popupWindow = new PopupWindow(
-                popupView, width, height, focusable);
-
-        popupWindow.setElevation(10);
-
-        popupWindow.setAnimationStyle(android.R.style.Animation_Translucent);
-
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"}) TextView confirmAddressButton = popupView.findViewById(R.id.confirmAddress);
-
-        confirmAddressButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO Save the pickup location in the database
-                popupWindow.dismiss();
                 Intent intent = new Intent(MedicalRecordActivity.this, Homepage.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-                finish();
             }
         });
 

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -150,8 +151,18 @@ public class SignUpActivity extends AppCompatActivity {
                                 }
                             });
                         } else {
-                            loadingBar.dismiss();
-                            Toast.makeText(SignUpActivity.this, "Email already Exists, or Password less than 6 digits", Toast.LENGTH_SHORT).show();
+                            loadingBar.setTitle("Sign Up");
+                            loadingBar.setMessage("Email already exists");
+                            loadingBar.setCanceledOnTouchOutside(false);
+                            loadingBar.show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!isFinishing() && loadingBar.isShowing()) {
+                                        loadingBar.dismiss();
+                                    }
+                                }
+                            }, 3000); // 3000 milliseconds = 3 seconds
                         }
                     }
                 });

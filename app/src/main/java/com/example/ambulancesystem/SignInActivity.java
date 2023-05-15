@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -55,8 +56,10 @@ public class SignInActivity extends AppCompatActivity {
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
+        Toast.makeText(getApplicationContext(), "Test toast message", Toast.LENGTH_SHORT).show();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -167,16 +170,37 @@ public class SignInActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(SignInActivity.this, "Signed In successfully", Toast.LENGTH_SHORT).show();
+                            // User signed in successfully
+                            loadingBar.setTitle("Sign In");
+                            loadingBar.setMessage("Signed In Successfully");
+                            loadingBar.setCanceledOnTouchOutside(false);
+                            loadingBar.show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!isFinishing() && loadingBar.isShowing()) {
+                                        loadingBar.dismiss();
+                                    }
+                                }
+                            }, 3000); // 3000 milliseconds = 3 seconds
                             Intent intent = new Intent(SignInActivity.this, Homepage.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish();
-
                         } else {
-                            loadingBar.dismiss();
-                            System.out.println("Error" + task.getException().getMessage());
-                            Toast.makeText(SignInActivity.this, "Email or password incorrect", Toast.LENGTH_SHORT).show();
+                            // Sign-in failed, show error message
+                            loadingBar.setTitle("Sign In");
+                            loadingBar.setMessage("Username or password incorrect");
+                            loadingBar.setCanceledOnTouchOutside(false);
+                            loadingBar.show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (!isFinishing() && loadingBar.isShowing()) {
+                                        loadingBar.dismiss();
+                                    }
+                                }
+                            }, 3000); // 3000 milliseconds = 3 seconds
                         }
                     }
                 });
