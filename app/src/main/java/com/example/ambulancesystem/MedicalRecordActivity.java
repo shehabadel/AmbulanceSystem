@@ -59,7 +59,7 @@ public class MedicalRecordActivity extends AppCompatActivity {
         maleButton = (RadioButton) findViewById(R.id.maleRadioButton);
         backButton = (ImageView) findViewById(R.id.backButton);
         signUpButton = (TextView) findViewById(R.id.signUpButton);
-        phoneNumberTextView = (TextView) findViewById(R.id.phoneNumber);
+        phoneNumberTextView = (TextView) findViewById(R.id.profileEmail);
         nationalIDTextView = (TextView) findViewById(R.id.nationalID);
         dateOfBirthTextView = (TextView) findViewById(R.id.birthDate);
         medicalConditionTextView = (TextView) findViewById(R.id.medicalCondition);

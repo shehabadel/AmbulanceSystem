@@ -43,9 +43,9 @@ public class SignUpActivity extends AppCompatActivity {
         proceedButton = (TextView) findViewById(R.id.proceedButton);
         firstName = (EditText) findViewById(R.id.firstName);
         lastName = (EditText) findViewById(R.id.lastName);
-        email = (EditText) findViewById(R.id.phoneNumber);
+        email = (EditText) findViewById(R.id.profileEmail);
         password = (EditText) findViewById(R.id.password);
-        confirmPassword = (EditText) findViewById(R.id.confirmPassword);
+        confirmPassword = (EditText) findViewById(R.id.profileBirthDate);
 
         loadingBar = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
