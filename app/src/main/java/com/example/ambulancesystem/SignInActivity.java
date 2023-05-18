@@ -19,11 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ambulancesystem.Interfaces.DriverInterface;
-import com.example.ambulancesystem.Models.Address;
-import com.example.ambulancesystem.Models.DriverModel;
-import com.example.ambulancesystem.Models.Location;
-import com.example.ambulancesystem.Models.RequestModel;
-import com.example.ambulancesystem.Models.Status;
 import com.example.ambulancesystem.Models.UserModel;
 import com.example.ambulancesystem.Services.DriverService;
 import com.example.ambulancesystem.ViewModels.RequestViewModel;
@@ -32,12 +27,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SignInActivity extends AppCompatActivity {
 

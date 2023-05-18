@@ -16,7 +16,7 @@ public class UserModel implements Parcelable {
     public String  nationalID;
     public String  email;
     public Address pickupAddress;
-    public Location currentLocation;
+    public LocationModel currentLocationModel;
 
     public String getEmail() {
         return email;
@@ -33,7 +33,7 @@ public class UserModel implements Parcelable {
             this.nationalID = other.nationalID;
             this.email = other.email;
             this.pickupAddress = new Address(other.pickupAddress);
-            this.currentLocation = new Location(other.currentLocation);
+            this.currentLocationModel = new LocationModel(other.currentLocationModel);
         } else {
             this.userID = other.userID;
             this.firstName = other.firstName;
@@ -45,7 +45,7 @@ public class UserModel implements Parcelable {
             this.nationalID = other.nationalID;
             this.email = other.email;
             this.pickupAddress = other.pickupAddress;
-            this.currentLocation = other.currentLocation;
+            this.currentLocationModel = other.currentLocationModel;
         }
     }
 
@@ -53,7 +53,7 @@ public class UserModel implements Parcelable {
         this.email = email;
     }
 
-    public UserModel(String userID, String firstName, String lastName, String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID, String email, Address pickupAddress, Location currentLocation) {
+    public UserModel(String userID, String firstName, String lastName, String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID, String email, Address pickupAddress, LocationModel currentLocationModel) {
         this.userID = userID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -64,7 +64,7 @@ public class UserModel implements Parcelable {
         this.nationalID = nationalID;
         this.email = email;
         this.pickupAddress = pickupAddress;
-        this.currentLocation = currentLocation;
+        this.currentLocationModel = currentLocationModel;
     }
 
     public UserModel(String medicalCondition, String dateOfBirth, String phoneNumber, String gender, String nationalID) {
@@ -73,6 +73,10 @@ public class UserModel implements Parcelable {
         this.phoneNumber = phoneNumber;
         this.gender = gender;
         this.nationalID = nationalID;
+    }
+
+    public UserModel(String medicalCondition) {
+        this.medicalCondition = medicalCondition;
     }
 
     @Override
@@ -87,7 +91,7 @@ public class UserModel implements Parcelable {
                 ", gender='" + gender + '\'' +
                 ", nationalID='" + nationalID + '\'' +
                 ", pickupAddress=" + (pickupAddress != null ? pickupAddress.toString() : "null") +
-                ", currentLocation=" + (currentLocation != null ? currentLocation.toString() : "null") +
+                ", currentLocation=" + (currentLocationModel != null ? currentLocationModel.toString() : "null") +
                 '}';
     }
 
@@ -122,7 +126,7 @@ public class UserModel implements Parcelable {
             String gender,
             String nationalID,
             Address pickupAddress,
-            Location currentLocation) {
+            LocationModel currentLocationModel) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.medicalCondition = medicalCondition;
@@ -131,7 +135,7 @@ public class UserModel implements Parcelable {
         this.gender = gender;
         this.nationalID = nationalID;
         this.pickupAddress = pickupAddress;
-        this.currentLocation = currentLocation;
+        this.currentLocationModel = currentLocationModel;
     }
 
     protected UserModel(Parcel in) {
@@ -160,7 +164,7 @@ public class UserModel implements Parcelable {
 
     public UserModel() {
         this.pickupAddress = new Address();
-        this.currentLocation = new Location();
+        this.currentLocationModel = new LocationModel();
     }
 
     public String getUserID() {
@@ -235,12 +239,12 @@ public class UserModel implements Parcelable {
         this.pickupAddress = pickupAddress;
     }
 
-    public Location getCurrentLocation() {
-        return currentLocation;
+    public LocationModel getCurrentLocation() {
+        return currentLocationModel;
     }
 
-    public void setCurrentLocation(Location currentLocation) {
-        this.currentLocation = currentLocation;
+    public void setCurrentLocation(LocationModel currentLocationModel) {
+        this.currentLocationModel = currentLocationModel;
     }
 
     @Override

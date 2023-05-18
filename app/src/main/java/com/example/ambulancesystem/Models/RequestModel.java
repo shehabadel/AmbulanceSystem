@@ -13,6 +13,13 @@ public class RequestModel implements Parcelable {
     public RequestModel() {
     }
 
+    public RequestModel(String requestCase, Status requestStatus, DriverModel requestDriver, boolean emergencyMode) {
+        this.requestCase = requestCase;
+        this.requestStatus = requestStatus;
+        this.requestDriver = requestDriver;
+        this.emergencyMode = emergencyMode;
+    }
+
     public RequestModel(String requestCase) {
         this.requestCase = requestCase;
     }
@@ -22,6 +29,15 @@ public class RequestModel implements Parcelable {
     }
 
     public void setEmergencyMode(boolean emergencyMode) {
+        this.emergencyMode = emergencyMode;
+    }
+
+    public RequestModel(String id, String requestCase, Status requestStatus, DriverModel requestDriver, UserModel requestUser, boolean emergencyMode) {
+        this.id = id;
+        this.requestCase = requestCase;
+        this.requestStatus = requestStatus;
+        this.requestDriver = requestDriver;
+        this.requestUser = requestUser;
         this.emergencyMode = emergencyMode;
     }
 
@@ -128,4 +144,5 @@ public class RequestModel implements Parcelable {
     public void setRequestUser(UserModel requestUser) {
         this.requestUser = requestUser;
     }
+
 }

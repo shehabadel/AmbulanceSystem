@@ -6,8 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ambulancesystem.Models.Address;
-import com.example.ambulancesystem.Models.Location;
-import com.example.ambulancesystem.Models.RequestModel;
+import com.example.ambulancesystem.Models.LocationModel;
 import com.example.ambulancesystem.Models.UserModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -61,8 +60,8 @@ public class UserRepo {
         loadUser();
     }
 
-    public boolean updateCurrentLocation(Location location) {
-        boolean isUserLocationUpdated = updateUserLocation(location);
+    public boolean updateCurrentLocation(LocationModel locationModel) {
+        boolean isUserLocationUpdated = updateUserLocation(locationModel);
         return isUserLocationUpdated;
     }
 
@@ -196,17 +195,20 @@ public class UserRepo {
     /**
      * Update's users current Location
      */
-    private boolean updateUserLocation(Location location) {
+    private boolean updateUserLocation(LocationModel locationModel) {
         String currentUser = auth.getCurrentUser().getUid();
         boolean userLocation = false;
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             DatabaseReference userPickupLocationRef = db.child("users").child(currentUser).child("profile").child("currentLocation");
-            userPickupLocationRef.setValue(location);
+            userPickupLocationRef.setValue(locationModel);
             userLocation = true;
         } catch (Exception e) {
             Log.e("updateLocation", e.getMessage());
         }
         return userLocation;
     }
+    /**
+     * Update
+     * */
 }

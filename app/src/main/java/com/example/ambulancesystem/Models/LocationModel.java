@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
-public class Location implements Parcelable {
+public class LocationModel implements Parcelable {
     public double latitude;
     public double longitude;
 
@@ -16,36 +16,36 @@ public class Location implements Parcelable {
                 ", longitude=" + longitude +
                 '}';
     }
-    public Location(Location original) {
+    public LocationModel(LocationModel original) {
         this.latitude = original.latitude;
         this.longitude = original.longitude;
     }
 
-    public Location() {
+    public LocationModel() {
     }
-    public Location(double latitude,double longitude){
+    public LocationModel(double latitude, double longitude){
         this.latitude=latitude;
         this.longitude=longitude;
     }
-    public Location(double latitude, double longitude, String address, float accuracy, float speed, float bearing) {
+    public LocationModel(double latitude, double longitude, String address, float accuracy, float speed, float bearing) {
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    protected Location(Parcel in) {
+    protected LocationModel(Parcel in) {
         latitude = in.readDouble();
         longitude = in.readDouble();
     }
 
-    public static final Creator<Location> CREATOR = new Creator<Location>() {
+    public static final Creator<LocationModel> CREATOR = new Creator<LocationModel>() {
         @Override
-        public Location createFromParcel(Parcel in) {
-            return new Location(in);
+        public LocationModel createFromParcel(Parcel in) {
+            return new LocationModel(in);
         }
 
         @Override
-        public Location[] newArray(int size) {
-            return new Location[size];
+        public LocationModel[] newArray(int size) {
+            return new LocationModel[size];
         }
     };
 

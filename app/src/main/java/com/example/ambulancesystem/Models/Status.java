@@ -2,7 +2,7 @@ package com.example.ambulancesystem.Models;
 
 public enum Status {
     REQUESTED,
-    DELIVERING,
+    ONMYWAY,
     COMPLETED,
     CANCELLED
 }

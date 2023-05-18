@@ -12,27 +12,40 @@ public class DriverModel implements Parcelable {
     int driverID;
     @SerializedName("driverName")
     String driverName;
-    @SerializedName("driverCarNumber")
+    @SerializedName("driveCarNumber")
     String driverCarNumber;
     @SerializedName("driverPhoneNumber")
     String driverPhoneNumber;
-    @SerializedName("driverETA")
-    String driverEstimatedTime;
+    @SerializedName("driverStatus")
+    String driverStatus;
     @SerializedName("driverLocationLong")
     float driverLocationLong;
     @SerializedName("driverLocationLat")
     float driverLocationLat;
-    Location driverLocation;
+    LocationModel driverLocationModel;
 
-    public DriverModel(int driverID, String driverName, String driverCarNumber, String driverPhoneNumber, String driverEstimatedTime, float driverLocationLong, float driverLocationLat, Location driverLocation) {
+    @Override
+    public String toString() {
+        return "DriverModel{" +
+                "driverID=" + driverID +
+                ", driverName='" + driverName + '\'' +
+                ", driverCarNumber='" + driverCarNumber + '\'' +
+                ", driverPhoneNumber='" + driverPhoneNumber + '\'' +
+                ", driverStatus='" + driverStatus + '\'' +
+                ", driverLocationLong=" + driverLocationLong +
+                ", driverLocationLat=" + driverLocationLat +
+                '}';
+    }
+
+    public DriverModel(int driverID, String driverName, String driverCarNumber, String driverPhoneNumber, String driverStatus, float driverLocationLong, float driverLocationLat, LocationModel driverLocationModel) {
         this.driverID = driverID;
         this.driverName = driverName;
         this.driverCarNumber = driverCarNumber;
         this.driverPhoneNumber = driverPhoneNumber;
-        this.driverEstimatedTime = driverEstimatedTime;
+        this.driverStatus = driverStatus;
         this.driverLocationLong = driverLocationLong;
         this.driverLocationLat = driverLocationLat;
-        this.driverLocation = driverLocation;
+        this.driverLocationModel = driverLocationModel;
     }
 
     public float getDriverLocationLong() {
@@ -62,21 +75,21 @@ public class DriverModel implements Parcelable {
         this.driverID = driverID;
     }
 
-    public DriverModel(int driverID, String driverName, String driverCarNumber, String driverPhoneNumber, String driverEstimatedTime, Location driverLocation) {
+    public DriverModel(int driverID, String driverName, String driverCarNumber, String driverPhoneNumber, String driverStatus, LocationModel driverLocationModel) {
         this.driverID = driverID;
         this.driverName = driverName;
         this.driverCarNumber = driverCarNumber;
         this.driverPhoneNumber = driverPhoneNumber;
-        this.driverEstimatedTime = driverEstimatedTime;
-        this.driverLocation = driverLocation;
+        this.driverStatus = driverStatus;
+        this.driverLocationModel = driverLocationModel;
     }
 
-    public DriverModel(String driverName, String driverCarNumber, String driverPhoneNumber, String driverEstimatedTime, Location driverLocation) {
+    public DriverModel(String driverName, String driverCarNumber, String driverPhoneNumber, String driverStatus, LocationModel driverLocationModel) {
         this.driverName = driverName;
         this.driverCarNumber = driverCarNumber;
         this.driverPhoneNumber = driverPhoneNumber;
-        this.driverEstimatedTime = driverEstimatedTime;
-        this.driverLocation = driverLocation;
+        this.driverStatus = driverStatus;
+        this.driverLocationModel = driverLocationModel;
     }
 
     public String getDriverName() {
@@ -103,28 +116,28 @@ public class DriverModel implements Parcelable {
         this.driverPhoneNumber = driverPhoneNumber;
     }
 
-    public String getDriverEstimatedTime() {
-        return driverEstimatedTime;
+    public String getDriverStatus() {
+        return driverStatus;
     }
 
-    public void setDriverEstimatedTime(String driverEstimatedTime) {
-        this.driverEstimatedTime = driverEstimatedTime;
+    public void setDriverStatus(String driverStatus) {
+        this.driverStatus = driverStatus;
     }
 
-    public Location getDriverLocation() {
-        return driverLocation;
+    public LocationModel getDriverLocation() {
+        return driverLocationModel;
     }
 
-    public void setDriverLocation(Location driverLocation) {
-        this.driverLocation = driverLocation;
+    public void setDriverLocation(LocationModel driverLocationModel) {
+        this.driverLocationModel = driverLocationModel;
     }
 
     protected DriverModel(Parcel in) {
         driverName = in.readString();
         driverCarNumber = in.readString();
         driverPhoneNumber = in.readString();
-        driverEstimatedTime = in.readString();
-        driverLocation = in.readParcelable(Location.class.getClassLoader());
+        driverStatus = in.readString();
+        driverLocationModel = in.readParcelable(LocationModel.class.getClassLoader());
     }
 
     public static final Creator<DriverModel> CREATOR = new Creator<DriverModel>() {
@@ -149,7 +162,7 @@ public class DriverModel implements Parcelable {
         dest.writeString(driverName);
         dest.writeString(driverCarNumber);
         dest.writeString(driverPhoneNumber);
-        dest.writeString(driverEstimatedTime);
-        dest.writeParcelable(driverLocation, flags);
+        dest.writeString(driverStatus);
+        dest.writeParcelable(driverLocationModel, flags);
     }
 }

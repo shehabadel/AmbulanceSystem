@@ -27,7 +27,7 @@ public class RequestViewModel extends ViewModel {
     /**
      * Create a request
      */
-    public void createRequest(RequestModel requestModel) {
-        RequestRepo.getInstance().createRequest(requestModel);
+    public boolean createRequest(RequestModel requestModel) {
+        return RequestRepo.getInstance().createRequest(requestModel);
     }
 }

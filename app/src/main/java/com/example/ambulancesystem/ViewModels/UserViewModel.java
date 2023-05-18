@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ambulancesystem.Models.Address;
-import com.example.ambulancesystem.Models.Location;
+import com.example.ambulancesystem.Models.LocationModel;
 import com.example.ambulancesystem.Models.UserModel;
 import com.example.ambulancesystem.Repository.UserRepo;
 
@@ -51,7 +51,7 @@ public class UserViewModel extends ViewModel {
     /**
      * Update user's current location
      */
-    public boolean updateUserLocation(Location location) {
-        return UserRepo.getInstance().updateCurrentLocation(location);
+    public boolean updateUserLocation(LocationModel locationModel) {
+        return UserRepo.getInstance().updateCurrentLocation(locationModel);
     }
 }
