@@ -10,6 +10,26 @@ public class RequestModel implements Parcelable {
     DriverModel requestDriver;
     UserModel requestUser; //Optional
     boolean emergencyMode;
+
+    public HospitalModel getRequestHospital() {
+        return requestHospital;
+    }
+
+    public void setRequestHospital(HospitalModel requestHospital) {
+        this.requestHospital = requestHospital;
+    }
+
+    public ETAResponse getRequestETA() {
+        return requestETA;
+    }
+
+    public void setRequestETA(ETAResponse requestETA) {
+        this.requestETA = requestETA;
+    }
+
+    HospitalModel requestHospital;
+    ETAResponse requestETA;
+
     public RequestModel() {
     }
 
@@ -53,9 +73,13 @@ public class RequestModel implements Parcelable {
     public String toString() {
         return "RequestModel{" +
                 "id='" + id + '\'' +
+                ", requestCase='" + requestCase + '\'' +
                 ", requestStatus=" + requestStatus +
                 ", requestDriver=" + requestDriver +
                 ", requestUser=" + requestUser +
+                ", emergencyMode=" + emergencyMode +
+                ", requestHospital=" + requestHospital +
+                ", requestETA='" + requestETA + '\'' +
                 '}';
     }
 

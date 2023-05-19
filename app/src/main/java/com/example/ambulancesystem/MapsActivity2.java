@@ -120,40 +120,15 @@ public class MapsActivity2 extends AppCompatActivity {
 
         homeButton = findViewById(R.id.homeButtonRequest);
 
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MapsActivity2.this, Homepage.class);
-                startActivity(intent);
-            }
-        });
-
         accountButton = findViewById(R.id.accountButtonRequest);
-
         accountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MapsActivity2.this, Homepage.class);
+                Intent intent = new Intent(MapsActivity2.this, ProfileActivity.class);
                 startActivity(intent);
             }
         });
 
-        backbtn = findViewById(R.id.backButton);
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MapsActivity2.this, Homepage.class);
-                startActivity(intent);
-            }
-        });
-//        avatar = findViewById(R.id.avatar_image);
-//        avatar.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MapsActivity2.this, ProfileActivity.class);
-//                startActivity(intent);
-//            }
-//        });
 
     }
 }

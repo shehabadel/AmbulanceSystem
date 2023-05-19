@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -71,6 +72,7 @@ public class Homepage extends AppCompatActivity {
     ETAService etaService;
     ETAInterface ETAAPI;
 
+    RequestModel currentRequest;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,29 @@ public class Homepage extends AppCompatActivity {
         //VIewModel to deal with Firebase Request node
         requestViewModel = new ViewModelProvider(this).get(RequestViewModel.class);
         requestViewModel.init();
+        requestViewModel.getRequest().observe(this, new Observer<RequestModel>() {
+            @Override
+            public void onChanged(RequestModel requestModel) {
+                currentRequest=requestModel;
+                if(currentRequest!=null){
+                    Log.d("currentRequestHome",currentRequest.toString());
+                }
+            }
+        });
+        /**
+         * In case there is a current request, then
+         * move to the MapsActivity2
+         * */
+        if(currentRequest!=null){
+            Intent intent = new Intent(Homepage.this, MapsActivity2.class);
+            // Pass the variables as extras in the Intent
+            intent.putExtra("requestedDriver", currentRequest.getRequestDriver());
+            intent.putExtra("requestedHospital", currentRequest.getRequestHospital());
+            intent.putExtra("etaResponse", currentRequest.getRequestETA());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+        }
         //API driver Service
         driverService = new DriverService();
         driverAPI = driverService.getDriverInterface();
@@ -172,6 +197,7 @@ public class Homepage extends AppCompatActivity {
         });
     }
 
+
     private void showMedicalCasePopup() {
         View popupView = getLayoutInflater().inflate(R.layout.medical_case_popup, null);
         int width = 1000;
@@ -198,38 +224,41 @@ public class Homepage extends AppCompatActivity {
                     newRequest.setRequestCase(medicalCase);
                     //Create request in Firebase node
                     boolean requested = requestViewModel.createRequest(newRequest);
-                    if (requested) {
-                        //Confirming the request by the driverID
-                        driverService.confirmRequest(String.valueOf(requestedDriver.getDriverID()), new DriverService.ConfirmRequestCallback() {
-                            @Override
-                            public void onSuccess(String confirmationMessage) {
-                                if (confirmationMessage.equals("Successful")) {
-                                    Toast.makeText(getApplicationContext(), "Request confirmed", Toast.LENGTH_SHORT).show();
-                                    //Requesting the hospital
-                                    hospitalService.getNearestHospital(userLocationModel, new HospitalService.NearestHospitalCallback() {
-                                        @Override
-                                        public void onSuccess(HospitalModel hospitalModel) {
-                                            Log.d("HOSPITAL", hospitalModel.toString());
-                                            requestedHospital = new HospitalModel();
-                                            requestedHospital.setHospitalName(hospitalModel.getHospitalName());
-                                            requestedHospital.setHospitalID(hospitalModel.getHospitalID());
-                                            requestedHospital.setHospitalLocationLat(hospitalModel.getHospitalLocationLat());
-                                            requestedHospital.setHospitalLocationLong(hospitalModel.getHospitalLocationLong());
-                                            requestedHospital.setNumberOfSeats(hospitalModel.getNumberOfSeats());
-                                            Log.d("REQUESTEDHOSP", requestedHospital.toString());
-                                            //Initialize the ETA model to make POST request on ETA Service
-                                            ETAModel etaModel = new ETAModel();
-                                            etaModel.setDriverLatitude(requestedDriver.getDriverLocationLat());
-                                            etaModel.setDriverLongitude(requestedDriver.getDriverLocationLong());
-                                            etaModel.setUserLatitude(userLocationModel.getLatitude());
-                                            etaModel.setUserLongitude(userLocationModel.getLongitude());
-                                            Log.d("ETAMODEL", etaModel.toString());
-                                            //ETA POST Request
-                                            etaService.getETA(etaModel, new ETAService.ETACallback() {
-                                                @Override
-                                                public void onSuccess(ETAResponse etaResponse) {
-                                                    Toast.makeText(getApplicationContext(), "ETARESPONSE:" + etaResponse, Toast.LENGTH_SHORT).show();
-                                                    Log.d("ETARESPONSE", etaResponse.getEstimatedTime());
+                    //Confirming the request by the driverID
+                    driverService.confirmRequest(String.valueOf(requestedDriver.getDriverID()), new DriverService.ConfirmRequestCallback() {
+                        @Override
+                        public void onSuccess(String confirmationMessage) {
+                            if (confirmationMessage.equals("Successful")) {
+                                Toast.makeText(getApplicationContext(), "Request confirmed", Toast.LENGTH_SHORT).show();
+                                //Requesting the hospital
+                                hospitalService.getNearestHospital(userLocationModel, new HospitalService.NearestHospitalCallback() {
+                                    @Override
+                                    public void onSuccess(HospitalModel hospitalModel) {
+                                        Log.d("HOSPITAL", hospitalModel.toString());
+                                        requestedHospital = new HospitalModel();
+                                        requestedHospital.setHospitalName(hospitalModel.getHospitalName());
+                                        requestedHospital.setHospitalID(hospitalModel.getHospitalID());
+                                        requestedHospital.setHospitalLocationLat(hospitalModel.getHospitalLocationLat());
+                                        requestedHospital.setHospitalLocationLong(hospitalModel.getHospitalLocationLong());
+                                        requestedHospital.setNumberOfSeats(hospitalModel.getNumberOfSeats());
+                                        newRequest.setRequestHospital(requestedHospital);
+                                        Log.d("REQUESTEDHOSP", requestedHospital.toString());
+                                        //Initialize the ETA model to make POST request on ETA Service
+                                        ETAModel etaModel = new ETAModel();
+                                        etaModel.setDriverLatitude(requestedDriver.getDriverLocationLat());
+                                        etaModel.setDriverLongitude(requestedDriver.getDriverLocationLong());
+                                        etaModel.setUserLatitude(userLocationModel.getLatitude());
+                                        etaModel.setUserLongitude(userLocationModel.getLongitude());
+                                        Log.d("ETAMODEL", etaModel.toString());
+                                        //ETA POST Request
+                                        etaService.getETA(etaModel, new ETAService.ETACallback() {
+                                            @Override
+                                            public void onSuccess(ETAResponse etaResponse) {
+                                                Toast.makeText(getApplicationContext(), "ETARESPONSE:" + etaResponse, Toast.LENGTH_SHORT).show();
+                                                Log.d("ETARESPONSE", etaResponse.getEstimatedTime());
+                                                newRequest.setRequestETA(etaResponse);
+                                                boolean requested = requestViewModel.createRequest(newRequest);
+                                                if (requested) {
                                                     popupWindow.dismiss();
                                                     Intent intent = new Intent(Homepage.this, MapsActivity2.class);
                                                     // Pass the variables as extras in the Intent
@@ -239,33 +268,36 @@ public class Homepage extends AppCompatActivity {
                                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                                     startActivity(intent);
                                                     finish();
+                                                } else {
+                                                    Toast.makeText(getApplicationContext(), "Couldn't create a request", Toast.LENGTH_SHORT).show();
                                                 }
-                                                @Override
-                                                public void onError(String errorMessage) {
-                                                    Toast.makeText(getApplicationContext(), "ETARESPONSE:" + errorMessage, Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                        }
-                                        @Override
-                                        public void onError(String errorMessage) {
-                                            Toast.makeText(getApplicationContext(), "Couldn't request hospital", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                } else {
-                                    Toast.makeText(getApplicationContext(), "Request wasn't confirmed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            @Override
-                            public void onError(String errorMessage) {
-                                Toast.makeText(getApplicationContext(), "Something has gone wrong" + errorMessage, Toast.LENGTH_SHORT).show();
-                                Log.d("ConfirmRequest", errorMessage);
-                            }
-                        });
-                        Toast.makeText(getApplicationContext(), "Created a request", Toast.LENGTH_SHORT).show();
+                                            }
 
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Couldn't create a request", Toast.LENGTH_SHORT).show();
-                    }
+                                            @Override
+                                            public void onError(String errorMessage) {
+                                                Toast.makeText(getApplicationContext(), "ETARESPONSE:" + errorMessage, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onError(String errorMessage) {
+                                        Toast.makeText(getApplicationContext(), "Couldn't request hospital", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Request wasn't confirmed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(String errorMessage) {
+                            Toast.makeText(getApplicationContext(), "Something has gone wrong" + errorMessage, Toast.LENGTH_SHORT).show();
+                            Log.d("ConfirmRequest", errorMessage);
+                        }
+                    });
+                    Toast.makeText(getApplicationContext(), "Created a request", Toast.LENGTH_SHORT).show();
+
                 } else {
                     medicalCaseInput.setError("Enter your medical case");
                     medicalCaseInput.requestFocus();
@@ -305,82 +337,124 @@ public class Homepage extends AppCompatActivity {
         confirmEmergency.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Creating a new request and save in Firebase
-                RequestModel newRequest = new RequestModel();
-                newRequest.setRequestStatus(Status.REQUESTED);
-                newRequest.setEmergencyMode(true);
-                newRequest.setRequestDriver(requestedDriver);
-                newRequest.setRequestCase("");
-                //Create request in Firebase node
-                boolean requested = requestViewModel.createRequest(newRequest);
-                if (requested) {
-                    //Confirming the request by the driverID
-                    driverService.confirmRequest(String.valueOf(requestedDriver.getDriverID()), new DriverService.ConfirmRequestCallback() {
-                        @Override
-                        public void onSuccess(String confirmationMessage) {
-                            if (confirmationMessage.equals("Successful")) {
-                                Toast.makeText(getApplicationContext(), "Request confirmed", Toast.LENGTH_SHORT).show();
-                                //Requesting the hospital
-                                hospitalService.getNearestHospital(userLocationModel, new HospitalService.NearestHospitalCallback() {
-                                    @Override
-                                    public void onSuccess(HospitalModel hospitalModel) {
-                                        Log.d("HOSPITAL", hospitalModel.toString());
-                                        requestedHospital = new HospitalModel();
-                                        requestedHospital.setHospitalName(hospitalModel.getHospitalName());
-                                        requestedHospital.setHospitalID(hospitalModel.getHospitalID());
-                                        requestedHospital.setHospitalLocationLat(hospitalModel.getHospitalLocationLat());
-                                        requestedHospital.setHospitalLocationLong(hospitalModel.getHospitalLocationLong());
-                                        requestedHospital.setNumberOfSeats(hospitalModel.getNumberOfSeats());
-                                        Log.d("REQUESTEDHOSP", requestedHospital.toString());
-                                        //Initialize the ETA model to make POST request on ETA Service
-                                        ETAModel etaModel = new ETAModel();
-                                        etaModel.setDriverLatitude(requestedDriver.getDriverLocationLat());
-                                        etaModel.setDriverLongitude(requestedDriver.getDriverLocationLong());
-                                        etaModel.setUserLatitude(userLocationModel.getLatitude());
-                                        etaModel.setUserLongitude(userLocationModel.getLongitude());
-                                        Log.d("ETAMODEL", etaModel.toString());
-                                        //ETA POST Request
-                                        etaService.getETA(etaModel, new ETAService.ETACallback() {
-                                            @Override
-                                            public void onSuccess(ETAResponse etaResponse) {
-                                                Toast.makeText(getApplicationContext(), "ETARESPONSE:" + etaResponse, Toast.LENGTH_SHORT).show();
-                                                Log.d("ETARESPONSE", etaResponse.getEstimatedTime());
-                                                Intent intent = new Intent(Homepage.this, MapsActivity2.class);
-                                                // Pass the variables as extras in the Intent
-                                                intent.putExtra("requestedDriver", requestedDriver);
-                                                intent.putExtra("requestedHospital", requestedHospital);
-                                                intent.putExtra("etaResponse", etaResponse);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                                startActivity(intent);
-                                                finish();
-                                                popupWindow.dismiss();
-                                            }
-                                            @Override
-                                            public void onError(String errorMessage) {
-                                                Toast.makeText(getApplicationContext(), "ETARESPONSE:" + errorMessage, Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    }
-                                    @Override
-                                    public void onError(String errorMessage) {
-                                        Toast.makeText(getApplicationContext(), "Couldn't request hospital", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Request wasn't confirmed", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                        @Override
-                        public void onError(String errorMessage) {
-                            Toast.makeText(getApplicationContext(), "Something has gone wrong" + errorMessage, Toast.LENGTH_SHORT).show();
-                            Log.d("ConfirmRequest", errorMessage);
-                        }
-                    });
-                    Toast.makeText(getApplicationContext(), "Created a request", Toast.LENGTH_SHORT).show();
+                //Fetch nearest driver based on location
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    try {
+                        if (currentLocation != null) {
+                            userLocationModel = new LocationModel(currentLocation.getLatitude(), currentLocation.getLongitude());
+                            //Save user's location
+                            userViewModel.updateUserLocation(userLocationModel);
+                            //Get nearest driver
+                            driverService.getNearestDriver(userLocationModel, new DriverService.NearestDriverCallback() {
+                                @Override
+                                public void onSuccess(DriverModel driverModel) {
+                                    Log.d("DRIVRERER", driverModel.toString());
+                                    requestedDriver = new DriverModel();
+                                    requestedDriver.setDriverID(driverModel.getDriverID());
+                                    requestedDriver.setDriverName(driverModel.getDriverName());
+                                    requestedDriver.setDriverStatus(driverModel.getDriverStatus());
+                                    requestedDriver.setDriveCarNumber(driverModel.getDriveCarNumber());
+                                    requestedDriver.setDriverPhoneNumber(driverModel.getDriverPhoneNumber());
+                                    requestedDriver.setDriverLocationLat(driverModel.getDriverLocationLat());
+                                    requestedDriver.setDriverLocationLong(driverModel.getDriverLocationLong());
+                                    //Creating a new request and save in Firebase
+                                    RequestModel newRequest = new RequestModel();
+                                    newRequest.setRequestStatus(Status.REQUESTED);
+                                    newRequest.setEmergencyMode(true);
+                                    newRequest.setRequestDriver(requestedDriver);
+                                    newRequest.setRequestCase("");
+                                    driverService.confirmRequest(String.valueOf(requestedDriver.getDriverID()), new DriverService.ConfirmRequestCallback() {
+                                        @Override
+                                        public void onSuccess(String confirmationMessage) {
+                                            if (confirmationMessage.equals("Successful")) {
+                                                Toast.makeText(getApplicationContext(), "Request confirmed", Toast.LENGTH_SHORT).show();
+                                                //Requesting the hospital
+                                                hospitalService.getNearestHospital(userLocationModel, new HospitalService.NearestHospitalCallback() {
+                                                    @Override
+                                                    public void onSuccess(HospitalModel hospitalModel) {
+                                                        Log.d("HOSPITAL", hospitalModel.toString());
+                                                        requestedHospital = new HospitalModel();
+                                                        requestedHospital.setHospitalName(hospitalModel.getHospitalName());
+                                                        requestedHospital.setHospitalID(hospitalModel.getHospitalID());
+                                                        requestedHospital.setHospitalLocationLat(hospitalModel.getHospitalLocationLat());
+                                                        requestedHospital.setHospitalLocationLong(hospitalModel.getHospitalLocationLong());
+                                                        requestedHospital.setNumberOfSeats(hospitalModel.getNumberOfSeats());
+                                                        //Set request's hospital
+                                                        newRequest.setRequestHospital(requestedHospital);
+                                                        Log.d("REQUESTEDHOSP", requestedHospital.toString());
+                                                        //Initialize the ETA model to make POST request on ETA Service
+                                                        ETAModel etaModel = new ETAModel();
+                                                        etaModel.setDriverLatitude(requestedDriver.getDriverLocationLat());
+                                                        etaModel.setDriverLongitude(requestedDriver.getDriverLocationLong());
+                                                        etaModel.setUserLatitude(userLocationModel.getLatitude());
+                                                        etaModel.setUserLongitude(userLocationModel.getLongitude());
+                                                        Log.d("ETAMODEL", etaModel.toString());
+                                                        //ETA POST Request
+                                                        etaService.getETA(etaModel, new ETAService.ETACallback() {
+                                                            @Override
+                                                            public void onSuccess(ETAResponse etaResponse) {
+                                                                Toast.makeText(getApplicationContext(), "ETARESPONSE:" + etaResponse, Toast.LENGTH_SHORT).show();
+                                                                Log.d("ETARESPONSE", etaResponse.getEstimatedTime());
+                                                                //Set request's ETA
+                                                                newRequest.setRequestETA(etaResponse);
+                                                                boolean requested = requestViewModel.createRequest(newRequest);
+                                                                if (requested) {
+                                                                    popupWindow.dismiss();
+                                                                    Intent intent = new Intent(Homepage.this, MapsActivity2.class);
+                                                                    // Pass the variables as extras in the Intent
+                                                                    intent.putExtra("requestedDriver", requestedDriver);
+                                                                    intent.putExtra("requestedHospital", requestedHospital);
+                                                                    intent.putExtra("etaResponse", etaResponse);
+                                                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                } else {
+                                                                    Toast.makeText(getApplicationContext(), "Couldn't create a request", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "Couldn't create a request", Toast.LENGTH_SHORT).show();
+                                                            @Override
+                                                            public void onError(String errorMessage) {
+                                                                Toast.makeText(getApplicationContext(), "ETARESPONSE:" + errorMessage, Toast.LENGTH_SHORT).show();
+                                                            }
+                                                        });
+                                                    }
+
+                                                    @Override
+                                                    public void onError(String errorMessage) {
+                                                        Toast.makeText(getApplicationContext(), "Couldn't request hospital", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            } else {
+                                                Toast.makeText(getApplicationContext(), "Request wasn't confirmed", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError(String errorMessage) {
+                                            Toast.makeText(getApplicationContext(), "Something has gone wrong" + errorMessage, Toast.LENGTH_SHORT).show();
+                                            Log.d("ConfirmRequest", errorMessage);
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onError(String errorMessage) {
+                                    Log.d("drivererror", errorMessage);
+                                    Toast.makeText(getApplicationContext(), "DriverAPI: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Please wait until the location works", Toast.LENGTH_SHORT).show();
+                            fetchUserLocation();
+                        }
+                    } catch (NullPointerException e) {
+                        Toast.makeText(getApplicationContext(), "Something has gone wrong!", Toast.LENGTH_SHORT).show();
+                        Log.e("currentLocation", e.toString());
+                        e.printStackTrace();
+                    }
                 }
+
             }
         });
 
@@ -430,7 +504,6 @@ public class Homepage extends AppCompatActivity {
             bound = true;
             fetchUserLocation();
         }
-
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {

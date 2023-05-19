@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ambulancesystem.Interfaces.DriverInterface;
+import com.example.ambulancesystem.Models.RequestModel;
 import com.example.ambulancesystem.Models.UserModel;
 import com.example.ambulancesystem.Services.DriverService;
 import com.example.ambulancesystem.ViewModels.RequestViewModel;
@@ -35,8 +36,7 @@ public class SignInActivity extends AppCompatActivity {
     TextView signInButton;
     UserViewModel userViewModel;
     RequestViewModel requestViewModel;
-    DriverInterface driverAPI;
-    DriverService driverService;
+    RequestModel currentRequest;
 
     private EditText emailSignIn, passwordSignIn;
     private FirebaseAuth mAuth;
@@ -70,8 +70,16 @@ public class SignInActivity extends AppCompatActivity {
         });
 
         requestViewModel = new ViewModelProvider(this).get(RequestViewModel.class);
-
-
+        requestViewModel.init();
+        requestViewModel.getRequest().observe(this, new Observer<RequestModel>() {
+            @Override
+            public void onChanged(RequestModel requestModel) {
+                currentRequest=requestModel;
+                if(currentRequest!=null){
+                    Log.d("currentRequest",currentRequest.toString());
+                }
+            }
+        });
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,7 +180,17 @@ public class SignInActivity extends AppCompatActivity {
                                     }
                                 }
                             }, 3000); // 3000 milliseconds = 3 seconds
-                            Intent intent = new Intent(SignInActivity.this, Homepage.class);
+                            Intent intent;
+                            if(currentRequest!=null){
+                                 intent = new Intent(SignInActivity.this, MapsActivity2.class);
+                                // Pass the variables as extras in the Intent
+                                intent.putExtra("requestedDriver", currentRequest.getRequestDriver());
+                                intent.putExtra("requestedHospital", currentRequest.getRequestHospital());
+                                intent.putExtra("etaResponse", currentRequest.getRequestETA());
+
+                            }else{
+                                intent = new Intent(SignInActivity.this, Homepage.class);
+                            }
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                             finish();

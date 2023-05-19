@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 public class RequestRepo {
     static RequestRepo instance;
     private MutableLiveData<RequestModel> request = null;
-    RequestModel requestModel = new RequestModel();
+    RequestModel requestModel;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public static RequestRepo getInstance() {

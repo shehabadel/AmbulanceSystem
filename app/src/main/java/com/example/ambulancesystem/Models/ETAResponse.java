@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 public class ETAResponse implements Parcelable {
     private String estimatedTime;
 
+    public ETAResponse() {
+    }
+
     public ETAResponse(String updatedTime) {
         this.estimatedTime = updatedTime;
     }
