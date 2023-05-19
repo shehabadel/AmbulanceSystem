@@ -9,6 +9,7 @@ import com.example.ambulancesystem.Models.DriverModel;
 import com.example.ambulancesystem.Models.RequestModel;
 import com.example.ambulancesystem.Models.Status;
 import com.example.ambulancesystem.Models.UserModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,7 +26,7 @@ public class RequestRepo {
     static RequestRepo instance;
     private MutableLiveData<RequestModel> request = null;
     RequestModel requestModel = new RequestModel();
-    private FirebaseAuth auth =  FirebaseAuth.getInstance();
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     public static RequestRepo getInstance() {
         if (instance == null) {
@@ -49,11 +50,18 @@ public class RequestRepo {
     }
 
     /**
+     * Remove current request
+     */
+    public void removeRequest() {
+        deleteRequest();
+    }
+
+    /**
      * Load current request created by a user
      */
     private void loadRequest() {
         try {
-             String currentUser = auth.getCurrentUser().getUid();
+            String currentUser = auth.getCurrentUser().getUid();
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
             Query requestQuery = db.child("requests").child(currentUser);
             Log.d("query", requestQuery.toString());
@@ -86,7 +94,7 @@ public class RequestRepo {
      * and driver
      */
     private boolean pushRequest(RequestModel createdRequest) {
-         String currentUser = auth.getCurrentUser().getUid();
+        String currentUser = auth.getCurrentUser().getUid();
         boolean isRequestCreated = false;
         try {
             DatabaseReference db = FirebaseDatabase.getInstance().getReference();
@@ -97,5 +105,24 @@ public class RequestRepo {
             Log.e("createRequest", e.getStackTrace().toString());
         }
         return isRequestCreated;
+    }
+
+    /**
+     * DeleteRequest from a database
+     */
+    private void deleteRequest() {
+        String currentUser = auth.getCurrentUser().getUid();
+        DatabaseReference db = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference requestRef = db.child("requests").child(currentUser);
+        try {
+            requestRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Log.d("deleteRequest", "Removed request from database");
+                }
+            });
+        } catch (Exception e) {
+            Log.d("deleteReqException", e.getMessage());
+        }
     }
 }

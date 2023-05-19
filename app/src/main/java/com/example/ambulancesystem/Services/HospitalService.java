@@ -152,7 +152,7 @@ public class HospitalService {
                 @Override
                 public void onResponse(Call<ConfirmCancelResponse> call, Response<ConfirmCancelResponse> response) {
                     if (!response.isSuccessful()) {
-                        Log.d("hospitalAPI", "---Not successful");
+                        Log.d("hospitalAPI", "---Not successful"+response.toString());
                         callback.onError("Request not successful");
                     } else {
                         ConfirmCancelResponse confirmationResponse = response.body();

@@ -30,4 +30,10 @@ public class RequestViewModel extends ViewModel {
     public boolean createRequest(RequestModel requestModel) {
         return RequestRepo.getInstance().createRequest(requestModel);
     }
+    /**
+     * Remove a request
+     * */
+    public void removeRequest(){
+        RequestRepo.getInstance().removeRequest();
+    }
 }
