@@ -121,13 +121,13 @@ public class MapsActivity2 extends AppCompatActivity {
         homeButton = findViewById(R.id.homeButtonRequest);
 
         accountButton = findViewById(R.id.accountButtonRequest);
-        accountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MapsActivity2.this, ProfileActivity.class);
-                startActivity(intent);
-            }
-        });
+//        accountButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MapsActivity2.this, ProfileActivity.class);
+//                startActivity(intent);
+//            }
+//        });
 
 
     }
