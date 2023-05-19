@@ -65,7 +65,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
         <TextView
-            android:id="@+id/longitudeValue"
+            android:id="@+id/hospitalLocationLong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -76,13 +76,13 @@
             app:layout_constraintTop_toTopOf="@+id/textView9" />
 
         <TextView
-            android:id="@+id/latitudeValue"
+            android:id="@+id/hospitalLocationLat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="31.37267785466297"
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="@+id/textView10"
-            app:layout_constraintStart_toStartOf="@+id/longitudeValue"
+            app:layout_constraintStart_toStartOf="@+id/hospitalLocationLong"
             app:layout_constraintTop_toTopOf="@+id/textView10" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -205,7 +205,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/eta"
+                android:id="@+id/etaResponse"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -258,6 +258,7 @@
                     android:src="@drawable/driver"></ImageView>
 
                 <TextView
+                    android:id="@+id/driverName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -305,6 +306,7 @@
                 </ImageView>
 
                 <TextView
+                    android:id="@+id/driverCarNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"

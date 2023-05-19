@@ -17,7 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DriverService {
-    private static final String BASE_URL = "http://192.168.8.103:8080";
+    private static final String BASE_URL = "http://192.168.1.8:8080";
     private static Retrofit retrofit = null;
     private static DriverInterface driverInterface;
 
@@ -94,7 +94,7 @@ public class DriverService {
                             Log.d("Driver", "Nearest driver: " + nearestDriver.getDriverName());
                             callback.onSuccess(nearestDriver);
                         } catch (Exception e) {
-                            Log.d("responseError:", String.valueOf(response.body()));
+                            Log.d("DriverResError:", String.valueOf(response.body()));
                             e.printStackTrace();
                             callback.onError(e.getMessage());
                         }

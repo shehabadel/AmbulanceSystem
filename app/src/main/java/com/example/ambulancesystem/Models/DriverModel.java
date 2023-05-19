@@ -13,7 +13,7 @@ public class DriverModel implements Parcelable {
     @SerializedName("driverName")
     String driverName;
     @SerializedName("driveCarNumber")
-    String driverCarNumber;
+    String driveCarNumber;
     @SerializedName("driverPhoneNumber")
     String driverPhoneNumber;
     @SerializedName("driverStatus")
@@ -22,14 +22,36 @@ public class DriverModel implements Parcelable {
     float driverLocationLong;
     @SerializedName("driverLocationLat")
     float driverLocationLat;
-    LocationModel driverLocationModel;
+
+
+    protected DriverModel(Parcel in) {
+        driverID = in.readInt();
+        driverName = in.readString();
+        driveCarNumber = in.readString();
+        driverPhoneNumber = in.readString();
+        driverStatus = in.readString();
+        driverLocationLong = in.readFloat();
+        driverLocationLat = in.readFloat();
+    }
+
+    public static final Creator<DriverModel> CREATOR = new Creator<DriverModel>() {
+        @Override
+        public DriverModel createFromParcel(Parcel in) {
+            return new DriverModel(in);
+        }
+
+        @Override
+        public DriverModel[] newArray(int size) {
+            return new DriverModel[size];
+        }
+    };
 
     @Override
     public String toString() {
         return "DriverModel{" +
                 "driverID=" + driverID +
                 ", driverName='" + driverName + '\'' +
-                ", driverCarNumber='" + driverCarNumber + '\'' +
+                ", driverCarNumber='" + driveCarNumber + '\'' +
                 ", driverPhoneNumber='" + driverPhoneNumber + '\'' +
                 ", driverStatus='" + driverStatus + '\'' +
                 ", driverLocationLong=" + driverLocationLong +
@@ -37,15 +59,14 @@ public class DriverModel implements Parcelable {
                 '}';
     }
 
-    public DriverModel(int driverID, String driverName, String driverCarNumber, String driverPhoneNumber, String driverStatus, float driverLocationLong, float driverLocationLat, LocationModel driverLocationModel) {
+    public DriverModel(int driverID, String driverName, String driveCarNumber, String driverPhoneNumber, String driverStatus, float driverLocationLong, float driverLocationLat) {
         this.driverID = driverID;
         this.driverName = driverName;
-        this.driverCarNumber = driverCarNumber;
+        this.driveCarNumber = driveCarNumber;
         this.driverPhoneNumber = driverPhoneNumber;
         this.driverStatus = driverStatus;
         this.driverLocationLong = driverLocationLong;
         this.driverLocationLat = driverLocationLat;
-        this.driverLocationModel = driverLocationModel;
     }
 
     public float getDriverLocationLong() {
@@ -75,21 +96,19 @@ public class DriverModel implements Parcelable {
         this.driverID = driverID;
     }
 
-    public DriverModel(int driverID, String driverName, String driverCarNumber, String driverPhoneNumber, String driverStatus, LocationModel driverLocationModel) {
+    public DriverModel(int driverID, String driverName, String driveCarNumber, String driverPhoneNumber, String driverStatus) {
         this.driverID = driverID;
         this.driverName = driverName;
-        this.driverCarNumber = driverCarNumber;
+        this.driveCarNumber = driveCarNumber;
         this.driverPhoneNumber = driverPhoneNumber;
         this.driverStatus = driverStatus;
-        this.driverLocationModel = driverLocationModel;
     }
 
-    public DriverModel(String driverName, String driverCarNumber, String driverPhoneNumber, String driverStatus, LocationModel driverLocationModel) {
+    public DriverModel(String driverName, String driveCarNumber, String driverPhoneNumber, String driverStatus) {
         this.driverName = driverName;
-        this.driverCarNumber = driverCarNumber;
+        this.driveCarNumber = driveCarNumber;
         this.driverPhoneNumber = driverPhoneNumber;
         this.driverStatus = driverStatus;
-        this.driverLocationModel = driverLocationModel;
     }
 
     public String getDriverName() {
@@ -100,12 +119,12 @@ public class DriverModel implements Parcelable {
         this.driverName = driverName;
     }
 
-    public String getDriverCarNumber() {
-        return driverCarNumber;
+    public String getDriveCarNumber() {
+        return driveCarNumber;
     }
 
-    public void setDriverCarNumber(String driverCarNumber) {
-        this.driverCarNumber = driverCarNumber;
+    public void setDriveCarNumber(String driveCarNumber) {
+        this.driveCarNumber = driveCarNumber;
     }
 
     public String getDriverPhoneNumber() {
@@ -124,33 +143,9 @@ public class DriverModel implements Parcelable {
         this.driverStatus = driverStatus;
     }
 
-    public LocationModel getDriverLocation() {
-        return driverLocationModel;
-    }
 
     public void setDriverLocation(LocationModel driverLocationModel) {
-        this.driverLocationModel = driverLocationModel;
     }
-
-    protected DriverModel(Parcel in) {
-        driverName = in.readString();
-        driverCarNumber = in.readString();
-        driverPhoneNumber = in.readString();
-        driverStatus = in.readString();
-        driverLocationModel = in.readParcelable(LocationModel.class.getClassLoader());
-    }
-
-    public static final Creator<DriverModel> CREATOR = new Creator<DriverModel>() {
-        @Override
-        public DriverModel createFromParcel(Parcel in) {
-            return new DriverModel(in);
-        }
-
-        @Override
-        public DriverModel[] newArray(int size) {
-            return new DriverModel[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -159,10 +154,12 @@ public class DriverModel implements Parcelable {
 
     @Override
     public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(driverID);
         dest.writeString(driverName);
-        dest.writeString(driverCarNumber);
+        dest.writeString(driveCarNumber);
         dest.writeString(driverPhoneNumber);
         dest.writeString(driverStatus);
-        dest.writeParcelable(driverLocationModel, flags);
+        dest.writeFloat(driverLocationLong);
+        dest.writeFloat(driverLocationLat);
     }
 }

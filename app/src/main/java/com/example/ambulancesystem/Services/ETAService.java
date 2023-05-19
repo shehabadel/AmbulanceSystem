@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ETAService
 {
-    private static final String BASE_URL = "http://192.168.8.103:8082";
+    private static final String BASE_URL = "http://192.168.1.8:8082";
     private static Retrofit retrofit = null;
     private static ETAInterface etaInterface;
     static synchronized Retrofit getClient() {
